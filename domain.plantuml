@@ -1,0 +1,81 @@
+@startuml
+
+package evidence {
+    ' Evidence can be anything that provides credence to a contestable
+    ' It can be collapsed into a score or a distribution of scores
+    abstract Evidence {
+        ' simplest representation: true or false
+        value(): Bool
+        ' a floating point between (-1?) 0 and 1
+        score(): Double
+        ' a histogram
+        score_distribution(): Distribution
+        ' maps it onto an ordinal variable (buckets)
+        to_order<T>(order: Order<T>): T
+    }
+
+    package example {
+        ' A PopularVote is the simplest, naivest way of providing credence.
+        ' It is the ratio of all people that believe vs. all people that don't believe a contestable
+        class PopularVote {
+        }
+
+        ' A NoobsAndExperts is a naive implementation of separating a vote based on
+        ' a node PopularVote and an expert PopularVote.
+        ' total score is 10% defined by noobs and 90% by experts by default (example)
+        class NoobsAndExperts {
+            noobs(): PopularVote
+            experts(): PopularVote
+        }
+
+        ' An EvidenceRecord combines multiple types of evidence
+        class "EvidenceRecord<E1,..,En: Evidence>" as Record {
+            e1(): E1
+            ...(): E.
+            en(): En
+        }
+    }
+}
+
+package contestable {
+
+    ' A Contestable is either an Expression or a Relation from an Expression to another Contestable
+    ' It represents things whose credence can be contested, e.g. attacked or supported
+    interface "Contestable<E: Evidence>" as Contestable {
+        directEvidence(): E
+        neighbourhood(): List<Contestable>
+        effectiveEvidence(integrator: Integrator<E>): E
+    }
+
+    ' An expression is a unit of text that expresses a collection of thoughts
+    ' Expressions can be large (books) or small (single statement)
+    ' Expressions can be composed into larger or decomposed into smaller Expressions
+    class "Expression<E: Evidence>" as Expression {
+    }
+
+    ' A Relation signals that a `from` Expression influences the credence of the `to` Contestable
+    class "Relation<E: Evidence>" as Relation {
+        from: Expression<E>
+        to: Contestable<E>
+    }
+}
+
+' An integrator takes local evidence and related evidence
+' and provides an integrated perspective
+interface "Integrator<E: Evidence>" as Integrator {
+    integrate(local: E, neighbourhood: List<E>): E
+}
+
+' We assume here that our service receives authenticated users
+' authorized to operate on their own data submissions
+interface Agent {
+    uuid: UUID
+}
+
+Evidence <|.. PopularVote : implements
+Evidence <|.. NoobsAndExperts : implements
+Evidence <|.. Record : implements
+Contestable <|.. Expression : implements
+Contestable <|.. Relation : implements
+
+@enduml
