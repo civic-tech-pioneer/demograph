@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/EdgeDef.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Member.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/NodeDef.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/dto/AgentDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/dto/AgentDef.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/domain/DomainGenerator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/domain/DomainGenerator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Edge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Edge.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Element.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraph.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraph.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Node.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Node.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/EdgeTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/EdgeTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/NodeTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/NodeTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +62,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Data Class" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -81,7 +88,8 @@
     "Gradle.Build debate.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "Gradle.SerializationTest.AgentDef should serialize to json and back.executor": "Run",
-    "Gradle.SerializationTest.executor": "Debug",
+    "Gradle.SerializationTest.executor": "Run",
+    "Gradle.Tests in 'debate.test'.executor": "Debug",
     "Gradle.debate [build].executor": "Run",
     "Kotlin.MainKt.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -94,6 +102,9 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/merlijn/Library/Mobile Documents/com~apple~CloudDocs/projects/nanquanu/debate/src/main/kotlin/Main.kt",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
@@ -104,10 +115,17 @@
       <recent name="$PROJECT_DIR$/src/main/kotlin/civictech" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="civictech.metagraph" />
       <recent name="civictech.domain" />
     </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="civictech.metagraph" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="civictech.metagraph" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.SerializationTest">
+  <component name="RunManager" selected="Gradle.Tests in 'debate.test'">
     <configuration name="SerializationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -156,6 +174,28 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Tests in 'debate.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="debate [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -180,6 +220,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'debate.test'" />
         <item itemvalue="Gradle.SerializationTest" />
         <item itemvalue="Gradle.debate [build]" />
         <item itemvalue="Gradle.SerializationTest.AgentDef should serialize to json and back" />
@@ -203,22 +244,11 @@
       <option name="presentableId" value="Default" />
       <updated>1729611357738</updated>
       <workItem from="1729611358885" duration="1434000" />
-      <workItem from="1729614157422" duration="19402000" />
+      <workItem from="1729614157422" duration="30010000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/test/kotlin/civictech/dto/SerializationTest.kt</url>
-          <line>19</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

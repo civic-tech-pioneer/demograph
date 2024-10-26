@@ -1,0 +1,56 @@
+agents:
+  - a1:
+    uuid: ""
+    displayName: "Merlijn"
+    expertise:
+      - e1: 1
+  - a2:
+    uuid: ""
+    displayName: "Chat-GPT 4"
+
+expressions:
+  - e1:
+    content: "The earth is a spheroid"
+    beliefs:
+      - a1: 1.0
+      - a2: 1.0
+  - e2:
+    content: "We can see so from space"
+    beliefs:
+      - a1: 1.0
+      - a2: 1.0
+  - e3:
+    # Example: here the uncertainty is about "Many"
+    # Requires a rephrase that extracts the variable
+    # And puts it up for collective estimation
+    content: "Many people believe that space photos are fake"
+    beliefs:
+      - a1: 0.3
+      - a2: 0.5
+  - e4:
+    content: "Neither popular, nor unpopular _belief_ of falsity prove the photos fake"
+    beliefs:
+      - a1: 0.6
+      - a2: 0.7
+
+relations:
+  support:
+    - r1:
+      from: e2
+      to: e1 # supported
+      beliefs:
+        - a1: 0.8
+        - a2: 1.0
+  attack:
+    - r2:
+      from: e3
+      to: e2 # attacked
+      beliefs:
+        - 0.0
+        - 0.2
+    - r3:
+      from: e4
+      to: r2 #undercut
+      beliefs:
+        - 1.0
+        - 0.8
