@@ -1,7 +1,8 @@
 package civictech.metagraph
 
-import java.util.UUID
+import java.util.*
 
-data class NodeDef<Data>(val id: UUID = UUID.randomUUID(), val data: Data? = null) {
-
-}
+data class NodeDef<Data>(
+    override val id: UUID = UUID.randomUUID(),
+    override val data: Data? = null
+) : MemberDef<Data>

@@ -4,14 +4,19 @@ import java.util.*
 
 data class Edge<Data>(
     override val metaGraph: MetaGraph<Data>,
-    val def: EdgeDef<Data>
+    override val def: EdgeDef<Data>
 ) : Member<Data>() {
-    override val id: UUID
-        get() = def.id
-    override val data: Data?
-        get() = def.data
-    val from: UUID
-        get() = def.fromRef
-    val to: UUID
-        get() = def.toRef
+
+    val sourceRef: UUID
+        get() = def.sourceRef
+    val targetRef: UUID
+        get() = def.targetRef
+
+    val source: Member<Data>?
+        get() = metaGraph[sourceRef]
+
+    val target: Member<Data>?
+        get() = metaGraph[targetRef]
+
+
 }

@@ -2,9 +2,14 @@ package civictech.metagraph
 
 import java.util.*
 
-data class EdgeDef<Data>(val id: UUID = UUID.randomUUID(), val fromRef: UUID, val toRef: UUID, val data: Data? = null) {
+data class EdgeDef<Data>(
+    override val id: UUID = UUID.randomUUID(),
+    val sourceRef: UUID,
+    val targetRef: UUID,
+    override val data: Data? = null
+) : MemberDef<Data> {
     init {
-        require(id != fromRef) { "Cannot connect from self" }
-        require(id != toRef) { "Cannot connect to self" }
+        require(id != sourceRef) { "Cannot connect from self" }
+        require(id != targetRef) { "Cannot connect to self" }
     }
 }

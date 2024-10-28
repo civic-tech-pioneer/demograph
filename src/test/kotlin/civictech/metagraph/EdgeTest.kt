@@ -10,22 +10,23 @@ import java.util.*
 class EdgeTest : StringSpec({
     "Edge should allow default initialization" {
         val edgeDef = EdgeDef<String>(
-            fromRef = UUID.randomUUID(),
-            toRef = UUID.randomUUID()
+            sourceRef = UUID.randomUUID(),
+            targetRef = UUID.randomUUID()
         )
         edgeDef.id shouldNot beNull()
-        edgeDef.fromRef shouldNot beNull()
-        edgeDef.toRef shouldNot beNull()
+        edgeDef.sourceRef shouldNot beNull()
+        edgeDef.targetRef shouldNot beNull()
         edgeDef.data should beNull()
     }
 
     "Edge should not allow self-connection" {
         val id = UUID.randomUUID()
         shouldThrow<IllegalArgumentException> {
-            EdgeDef<String>(id, fromRef = id, toRef = UUID.randomUUID())
+            EdgeDef<String>(id, sourceRef = id, targetRef = UUID.randomUUID())
         }
         shouldThrow<IllegalArgumentException> {
-            EdgeDef<String>(id, fromRef = UUID.randomUUID(), toRef = id)
+            EdgeDef<String>(id, sourceRef = UUID.randomUUID(), targetRef = id)
         }
     }
+
 })

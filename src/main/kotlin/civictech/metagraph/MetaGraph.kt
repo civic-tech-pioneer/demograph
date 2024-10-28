@@ -1,77 +1,62 @@
 package civictech.metagraph
 
-import java.util.UUID
+import java.util.*
 
 class MetaGraph<Data>(
-    val nodes: Map<UUID, NodeDef<Data>> = mapOf(),
-    val edges: Map<UUID, EdgeDef<Data>> = mapOf(),
-) : Map<UUID, Member<Data>>{
+    val members: Map<UUID, MemberDef<Data>> = mapOf(),
+    val fromIndex: Map<UUID, List<EdgeDef<Data>>> = mapOf(),
+    val toIndex: Map<UUID, List<EdgeDef<Data>>> = mapOf()
+) : Map<UUID, Member<Data>> {
 
-    override val size: Int = 0
-
-    override fun isEmpty(): Boolean {
-        return nodes.isEmpty() && edges.isEmpty()
-    }
-
-    /* === Member ===  */
+    /* === Members Map API ===  */
     override val entries: Set<Map.Entry<UUID, Member<Data>>>
-        get() = nodeEntries.union(edgeEntries)
+        get() = members.mapValues { fromDef(it.value) }.entries
+
+    override val size: Int = members.size
+
+    override fun isEmpty(): Boolean = members.isEmpty()
 
     override val keys: Set<UUID>
-        get() = nodeKeys.union(edgeKeys)
+        get() = members.keys
 
     override val values: Collection<Member<Data>>
-        get() = nodeValues.union(edgeValues)
+        get() = members.values.map { fromDef(it) }
 
-    override fun containsKey(key: UUID): Boolean =
-        containsNodeKey(key) || containsEdgeKey(key)
+    override fun containsKey(key: UUID): Boolean = members.containsKey(key)
 
-    override fun containsValue(value: Member<Data>): Boolean {
-        when(value) {
-            is Node<Data> -> containsNodeValue(value)
-            is Edge<Data> -> containsEdgeValue(value)
-        }
-        return false
+    override fun containsValue(value: Member<Data>): Boolean = members.containsKey(value.id)
+
+    override fun get(key: UUID): Member<Data>? = members[key]?.let { fromDef(it) }
+
+    /* === Traversal === */
+
+    fun incoming(id: UUID): List<Edge<Data>> =
+        toIndex[id]?.map { Edge(this, it) } ?: emptyList()
+
+    fun outgoing(id: UUID): List<Edge<Data>> =
+        fromIndex[id]?.map { Edge(this, it) } ?: emptyList()
+
+    fun traversal(): Traversal<Data> = Traversal(this)
+
+
+
+    private fun fromDef(memberDef: MemberDef<Data>): Member<Data> = when (memberDef) {
+        is NodeDef<Data> -> Node(this, def = memberDef)
+        is EdgeDef<Data> -> Edge(this, def = memberDef)
+        else -> throw IllegalArgumentException()
     }
 
-    override fun get(key: UUID): Member<Data>? = getNode(key) ?: getEdge(key)
+    companion object {
+        fun <Data> withMembers(vararg members: MemberDef<Data>): MetaGraph<Data> =
+            withMembers(members.toList())
 
-    /* === Node === */
-    private fun node(def: NodeDef<Data>): Node<Data> =
-        Node(this, def)
-
-    val nodeEntries: Set<Map.Entry<UUID, Node<Data>>>
-        get() = nodes.mapValues{node(it.value)}.entries
-
-    val nodeKeys: Set<UUID>
-        get() = nodes.keys
-
-    val nodeValues: Collection<Node<Data>>
-        get() = nodes.values.map(::node)
-
-    fun containsNodeKey(key: UUID): Boolean = nodes.containsKey(key)
-
-    fun containsNodeValue(value: Node<Data>): Boolean = containsNodeKey(value.id)
-
-    fun getNode(key: UUID): Node<Data>? = nodes[key]?.let(::node)
-
-    /* === Edge === */
-    private fun edge(def: EdgeDef<Data>): Edge<Data> =
-        Edge(this, def)
-
-    val edgeEntries: Set<Map.Entry<UUID, Edge<Data>>>
-        get() = edges.mapValues{edge(it.value)}.entries
-
-    val edgeKeys: Set<UUID>
-        get() = edges.keys
-
-    val edgeValues: Collection<Edge<Data>>
-        get() = edges.values.map(::edge)
-
-    fun containsEdgeKey(key: UUID): Boolean = edges.containsKey(key)
-
-    fun containsEdgeValue(value: Edge<Data>): Boolean = containsEdgeKey(value.id)
-
-    fun getEdge(key: UUID): Edge<Data>? = edges[key]?.let(::edge)
-
+        fun <Data> withMembers(members: Collection<MemberDef<Data>>): MetaGraph<Data> {
+            val edges = members.filterIsInstance<EdgeDef<Data>>()
+            return MetaGraph(
+                members.associateBy { it.id },
+                edges.groupBy { it.sourceRef },
+                edges.groupBy { it.targetRef }
+            )
+        }
+    }
 }

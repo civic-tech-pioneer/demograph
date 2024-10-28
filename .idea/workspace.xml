@@ -5,17 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/EdgeDef.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Member.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/NodeDef.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Edge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Edge.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Element.kt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraph.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraph.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Node.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Node.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/EdgeTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/EdgeTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/NodeTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/NodeTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,9 +52,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Data Class" />
         <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Data Class" />
       </list>
     </option>
   </component>
@@ -89,7 +80,7 @@
     "Gradle.Download Sources.executor": "Run",
     "Gradle.SerializationTest.AgentDef should serialize to json and back.executor": "Run",
     "Gradle.SerializationTest.executor": "Run",
-    "Gradle.Tests in 'debate.test'.executor": "Debug",
+    "Gradle.Tests in 'debate.test'.executor": "Run",
     "Gradle.debate [build].executor": "Run",
     "Kotlin.MainKt.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -244,7 +235,7 @@
       <option name="presentableId" value="Default" />
       <updated>1729611357738</updated>
       <workItem from="1729611358885" duration="1434000" />
-      <workItem from="1729614157422" duration="30010000" />
+      <workItem from="1729614157422" duration="47247000" />
     </task>
     <servers />
   </component>
