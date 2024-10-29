@@ -4,5 +4,5 @@ import java.util.*
 
 interface MemberDef<T> {
     val id: UUID
-    val data: T?
+    var data: T?
 }

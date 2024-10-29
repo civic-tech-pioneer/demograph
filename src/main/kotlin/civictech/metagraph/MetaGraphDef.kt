@@ -2,10 +2,10 @@ package civictech.metagraph
 
 import java.util.*
 
-class MetaGraph<Data>(
-    val members: Map<UUID, MemberDef<Data>> = mapOf(),
-    val fromIndex: Map<UUID, List<EdgeDef<Data>>> = mapOf(),
-    val toIndex: Map<UUID, List<EdgeDef<Data>>> = mapOf()
+class MetaGraphDef<Data>(
+    val members: MutableMap<UUID, MemberDef<Data>> = mutableMapOf(),
+    val sourceIndex: MutableMap<UUID, MutableSet<EdgeDef<Data>>> = mutableMapOf(),
+    val targetIndex: MutableMap<UUID, MutableSet<EdgeDef<Data>>> = mutableMapOf()
 ) : Map<UUID, Member<Data>> {
 
     /* === Members Map API ===  */
@@ -28,13 +28,21 @@ class MetaGraph<Data>(
 
     override fun get(key: UUID): Member<Data>? = members[key]?.let { fromDef(it) }
 
+    fun add(memberDef: MemberDef<Data>) {
+        members += memberDef.id to memberDef
+        if(memberDef is EdgeDef<Data>) {
+            sourceIndex.getOrPut(memberDef.sourceRef) { mutableSetOf() }.add(memberDef)
+            targetIndex.getOrPut(memberDef.targetRef) { mutableSetOf() }.add(memberDef)
+        }
+    }
+
     /* === Traversal === */
 
     fun incoming(id: UUID): List<Edge<Data>> =
-        toIndex[id]?.map { Edge(this, it) } ?: emptyList()
+        targetIndex[id]?.map { Edge(this, it) } ?: emptyList()
 
     fun outgoing(id: UUID): List<Edge<Data>> =
-        fromIndex[id]?.map { Edge(this, it) } ?: emptyList()
+        sourceIndex[id]?.map { Edge(this, it) } ?: emptyList()
 
     fun traversal(): Traversal<Data> = Traversal(this)
 
@@ -47,15 +55,15 @@ class MetaGraph<Data>(
     }
 
     companion object {
-        fun <Data> withMembers(vararg members: MemberDef<Data>): MetaGraph<Data> =
+        fun <Data> withMembers(vararg members: MemberDef<Data>): MetaGraphDef<Data> =
             withMembers(members.toList())
 
-        fun <Data> withMembers(members: Collection<MemberDef<Data>>): MetaGraph<Data> {
+        fun <Data> withMembers(members: Collection<MemberDef<Data>>): MetaGraphDef<Data> {
             val edges = members.filterIsInstance<EdgeDef<Data>>()
-            return MetaGraph(
-                members.associateBy { it.id },
-                edges.groupBy { it.sourceRef },
-                edges.groupBy { it.targetRef }
+            return MetaGraphDef(
+                members.associateBy { it.id }.toMutableMap(),
+                edges.groupBy { it.sourceRef }.mapValues { it.value.toMutableSet() }.toMutableMap(),
+                edges.groupBy { it.targetRef }.mapValues { it.value.toMutableSet() }.toMutableMap()
             )
         }
     }

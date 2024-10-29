@@ -3,7 +3,7 @@ package civictech.metagraph
 import java.util.*
 
 abstract class Member<Data> {
-    abstract val metaGraph: MetaGraph<Data>
+    abstract val metaGraphDef: MetaGraphDef<Data>
     abstract val def: MemberDef<Data>
 
     val id: UUID
@@ -13,8 +13,8 @@ abstract class Member<Data> {
         get() = def.data
 
     val incoming: List<Edge<Data>>
-        get() = metaGraph.incoming(id)
+        get() = metaGraphDef.incoming(id)
 
     val outgoing: List<Edge<Data>>
-        get() = metaGraph.outgoing(id)
+        get() = metaGraphDef.outgoing(id)
 }

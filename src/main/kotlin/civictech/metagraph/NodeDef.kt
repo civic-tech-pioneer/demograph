@@ -4,5 +4,5 @@ import java.util.*
 
 data class NodeDef<Data>(
     override val id: UUID = UUID.randomUUID(),
-    override val data: Data? = null
+    override var data: Data? = null
 ) : MemberDef<Data>

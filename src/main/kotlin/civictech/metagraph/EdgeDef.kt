@@ -6,7 +6,7 @@ data class EdgeDef<Data>(
     override val id: UUID = UUID.randomUUID(),
     val sourceRef: UUID,
     val targetRef: UUID,
-    override val data: Data? = null
+    override var data: Data? = null
 ) : MemberDef<Data> {
     init {
         require(id != sourceRef) { "Cannot connect from self" }

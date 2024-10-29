@@ -3,7 +3,7 @@ package civictech.metagraph
 import java.util.*
 
 data class Edge<Data>(
-    override val metaGraph: MetaGraph<Data>,
+    override val metaGraphDef: MetaGraphDef<Data>,
     override val def: EdgeDef<Data>
 ) : Member<Data>() {
 
@@ -13,10 +13,10 @@ data class Edge<Data>(
         get() = def.targetRef
 
     val source: Member<Data>?
-        get() = metaGraph[sourceRef]
+        get() = metaGraphDef[sourceRef]
 
     val target: Member<Data>?
-        get() = metaGraph[targetRef]
+        get() = metaGraphDef[targetRef]
 
 
 }
