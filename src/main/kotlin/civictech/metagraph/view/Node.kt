@@ -1,6 +1,10 @@
-package civictech.metagraph
+package civictech.metagraph.view
 
-data class Node<In, Out: Credence>(
+import civictech.metagraph.MetaGraphDef
+import civictech.metagraph.Quantifiable
+import civictech.metagraph.def.NodeDef
+
+data class Node<In, Out : Quantifiable>(
     override val metaGraphDef: MetaGraphDef<In, Out>,
     override val def: NodeDef<In, Out>
 ) : Member<In, Out>() {

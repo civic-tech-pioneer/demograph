@@ -1,9 +1,13 @@
 package civictech.metagraph
 
+import civictech.metagraph.def.EdgeDef
+import civictech.metagraph.def.NodeDef
+import civictech.metagraph.view.Edge
+import civictech.metagraph.view.Node
 import civictech.test.Median
 import civictech.test.Null
-import civictech.test.TestIntegrator
 import civictech.test.NullIntegrator
+import civictech.test.TestIntegrator
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.containOnly
 import io.kotest.matchers.maps.beEmpty

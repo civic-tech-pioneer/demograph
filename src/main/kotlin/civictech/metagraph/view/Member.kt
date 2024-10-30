@@ -1,9 +1,13 @@
-package civictech.metagraph
+package civictech.metagraph.view
 
+import civictech.metagraph.MetaGraphDef
+import civictech.metagraph.Quantifiable
+import civictech.metagraph.def.MemberDef
 import java.util.*
 import kotlin.math.abs
 
-abstract class Member<In, Out: Credence> {
+abstract class Member<In, Out : Quantifiable> {
+
     abstract val metaGraphDef: MetaGraphDef<In, Out>
     abstract val def: MemberDef<In, Out>
 

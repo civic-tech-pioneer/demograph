@@ -1,8 +1,9 @@
-package civictech.metagraph
+package civictech.metagraph.def
 
+import civictech.metagraph.Quantifiable
 import java.util.*
 
-abstract class MemberDef<In, Out: Credence> {
+abstract class MemberDef<In, Out : Quantifiable> {
     private var _data: In? = null
     private var _integrated: Out? = null
 

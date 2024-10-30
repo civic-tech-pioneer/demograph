@@ -1,5 +1,5 @@
 package civictech.metagraph
 
-interface Credence {
+interface Quantifiable {
     val score: Float
 }

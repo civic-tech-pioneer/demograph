@@ -1,5 +1,6 @@
 package civictech.metagraph
 
+import civictech.metagraph.def.EdgeDef
 import civictech.test.Null
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec

@@ -1,6 +1,9 @@
 package civictech.test
 
-import civictech.metagraph.*
+import civictech.metagraph.Quantifiable
+import civictech.metagraph.view.Edge
+import civictech.metagraph.Integrator
+import civictech.metagraph.view.Node
 import kotlin.math.round
 
 object TestIntegrator : Integrator<Int, Median> {
@@ -21,7 +24,7 @@ object TestIntegrator : Integrator<Int, Median> {
     }
 }
 
-data class Median(val ints: List<Int>) : Credence {
+data class Median(val ints: List<Int>) : Quantifiable {
 
     val value: Int? by lazy {
         val sortedInts = ints.sorted()

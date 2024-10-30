@@ -1,8 +1,9 @@
-package civictech.metagraph
+package civictech.metagraph.def
 
+import civictech.metagraph.Quantifiable
 import java.util.*
 
-data class EdgeDef<In, Out: Credence>(
+data class EdgeDef<In, Out : Quantifiable>(
     override val id: UUID = UUID.randomUUID(),
     val sourceRef: UUID,
     val targetRef: UUID,

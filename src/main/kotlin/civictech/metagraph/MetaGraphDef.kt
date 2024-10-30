@@ -1,8 +1,14 @@
 package civictech.metagraph
 
+import civictech.metagraph.def.EdgeDef
+import civictech.metagraph.def.MemberDef
+import civictech.metagraph.def.NodeDef
+import civictech.metagraph.view.Edge
+import civictech.metagraph.view.Member
+import civictech.metagraph.view.Node
 import java.util.*
 
-class MetaGraphDef<In, Out : Credence>(
+class MetaGraphDef<In, Out : Quantifiable>(
     internal val integrator: Integrator<In, Out>,
     private val members: MutableMap<UUID, MemberDef<In, Out>> = mutableMapOf(),
     private val sourceIndex: MutableMap<UUID, MutableSet<EdgeDef<In, Out>>> = mutableMapOf(),
@@ -76,19 +82,19 @@ class MetaGraphDef<In, Out : Credence>(
     }
 
     companion object {
-        internal data class Update<In, Out : Credence>(val member: Member<In, Out>, val priority: Float) :
+        internal data class Update<In, Out : Quantifiable>(val member: Member<In, Out>, val priority: Float) :
             Comparable<Update<In, Out>> {
             override fun compareTo(other: Update<In, Out>): Int =
                 this.priority.compareTo(other.priority)
         }
 
-        fun <In, Out : Credence> withMembers(
+        fun <In, Out : Quantifiable> withMembers(
             integrator: Integrator<In, Out>,
             vararg members: MemberDef<In, Out>
         ): MetaGraphDef<In, Out> =
             withMembers(integrator, members.toList())
 
-        fun <In, Out : Credence> withMembers(
+        fun <In, Out : Quantifiable> withMembers(
             integrator: Integrator<In, Out>,
             members: Collection<MemberDef<In, Out>>
         ): MetaGraphDef<In, Out> {

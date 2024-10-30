@@ -1,5 +1,6 @@
 package civictech.metagraph
 
+import civictech.metagraph.def.NodeDef
 import civictech.test.Null
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.nulls.beNull
