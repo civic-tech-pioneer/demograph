@@ -2,12 +2,14 @@ package civictech.metagraph
 
 import java.util.*
 
-class MetaGraphDef<In, Out: Credence>(
-    private val integrator: Integrator<In, Out>,
-    private val members: MutableMap<UUID, MemberDef<In>> = mutableMapOf(),
-    private val sourceIndex: MutableMap<UUID, MutableSet<EdgeDef<In>>> = mutableMapOf(),
-    private val targetIndex: MutableMap<UUID, MutableSet<EdgeDef<In>>> = mutableMapOf()
+class MetaGraphDef<In, Out : Credence>(
+    internal val integrator: Integrator<In, Out>,
+    private val members: MutableMap<UUID, MemberDef<In, Out>> = mutableMapOf(),
+    private val sourceIndex: MutableMap<UUID, MutableSet<EdgeDef<In, Out>>> = mutableMapOf(),
+    private val targetIndex: MutableMap<UUID, MutableSet<EdgeDef<In, Out>>> = mutableMapOf()
 ) : Map<UUID, Member<In, Out>> {
+
+    private val queue: PriorityQueue<Update<In, Out>> = PriorityQueue()
 
     /* === Members Map API ===  */
     override val entries: Set<Map.Entry<UUID, Member<In, Out>>>
@@ -29,9 +31,9 @@ class MetaGraphDef<In, Out: Credence>(
 
     override fun get(key: UUID): Member<In, Out>? = members[key]?.let { fromDef(it) }
 
-    fun add(memberDef: MemberDef<In>) {
+    fun add(memberDef: MemberDef<In, Out>) {
         members += memberDef.id to memberDef
-        if(memberDef is EdgeDef<In>) {
+        if (memberDef is EdgeDef<In, Out>) {
             sourceIndex.getOrPut(memberDef.sourceRef) { mutableSetOf() }.add(memberDef)
             targetIndex.getOrPut(memberDef.targetRef) { mutableSetOf() }.add(memberDef)
         }
@@ -45,25 +47,52 @@ class MetaGraphDef<In, Out: Credence>(
     fun outgoing(id: UUID): List<Edge<In, Out>> =
         sourceIndex[id]?.map { Edge(this, it) } ?: emptyList()
 
+    /* === Propagation | Fixpoint calculation === */
+    val isFixPoint
+        get(): Boolean = queue.isEmpty()
 
-    private fun fromDef(memberDef: MemberDef<In>): Member<In, Out> = when (memberDef) {
-        is NodeDef<In> -> Node(this, def = memberDef)
-        is EdgeDef<In> -> Edge(this, def = memberDef)
+    fun propagateUpdate() {
+        val member = queue.remove().member
+        member.integrated = integrator.integrate(member)
+    }
+
+    internal fun queuePropagation(member: Member<In, Out>, priority: Float) {
+        outgoing(member.id).forEach {
+            queue.add(Update(it, priority))
+        }
+        if (member is Edge<In, Out>) {
+            member.target?.let { queue.add(Update(it, priority)) }
+        }
+    }
+
+    private fun fromDef(memberDef: MemberDef<In, Out>): Member<In, Out> = when (memberDef) {
+        is NodeDef<In, Out> -> Node(this, def = memberDef)
+        is EdgeDef<In, Out> -> Edge(this, def = memberDef)
         else -> throw IllegalArgumentException()
     }
 
-    internal fun queuePropagation(member: Member<In, Out>) {
-        val edgeDefs = sourceIndex[member.id] ?: mutableSetOf()
-        TODO("Need to implement propagation. E.g. integrate the change, propagate it.")
-//        edgeDefs.forEach{ edge -> edge.data. }
+    override fun toString(): String {
+        return values.toString()
     }
 
     companion object {
-        fun <In, Out: Credence> withMembers(integrator: Integrator<In, Out>, vararg members: MemberDef<In>): MetaGraphDef<In, Out> =
+        internal data class Update<In, Out : Credence>(val member: Member<In, Out>, val priority: Float) :
+            Comparable<Update<In, Out>> {
+            override fun compareTo(other: Update<In, Out>): Int =
+                this.priority.compareTo(other.priority)
+        }
+
+        fun <In, Out : Credence> withMembers(
+            integrator: Integrator<In, Out>,
+            vararg members: MemberDef<In, Out>
+        ): MetaGraphDef<In, Out> =
             withMembers(integrator, members.toList())
 
-        fun <In, Out: Credence> withMembers(integrator: Integrator<In, Out>, members: Collection<MemberDef<In>>): MetaGraphDef<In, Out> {
-            val edges = members.filterIsInstance<EdgeDef<In>>()
+        fun <In, Out : Credence> withMembers(
+            integrator: Integrator<In, Out>,
+            members: Collection<MemberDef<In, Out>>
+        ): MetaGraphDef<In, Out> {
+            val edges = members.filterIsInstance<EdgeDef<In, Out>>()
             return MetaGraphDef(
                 integrator,
                 members.associateBy { it.id }.toMutableMap(),

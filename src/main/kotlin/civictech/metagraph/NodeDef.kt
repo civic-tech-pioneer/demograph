@@ -2,7 +2,11 @@ package civictech.metagraph
 
 import java.util.*
 
-data class NodeDef<In>(
+data class NodeDef<In, Out: Credence>(
     override val id: UUID = UUID.randomUUID(),
-    override var data: In? = null
-) : MemberDef<In>
+    override val initialData: In? = null
+) : MemberDef<In, Out>() {
+    init {
+        data = initialData
+    }
+}

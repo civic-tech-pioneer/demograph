@@ -5,21 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Credence.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Integrator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/test/NullIntegrator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/test/TestIntegrator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Edge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Edge.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/EdgeDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/EdgeDef.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Member.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Member.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MemberDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MemberDef.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraphDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraphDef.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Node.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Node.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/NodeDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/NodeDef.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Traversal.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/Traversal.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/TraversalTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/TraversalTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +126,7 @@
       <recent name="civictech.metagraph" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.civictech.metagraph in debate.main">
+  <component name="RunManager" selected="Gradle.Tests in 'debate.test'">
     <configuration name="SerializationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -232,9 +225,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'debate.test'" />
         <item itemvalue="JUnit.civictech.metagraph in debate.main" />
         <item itemvalue="JUnit.civictech in debate.main" />
-        <item itemvalue="Gradle.Tests in 'debate.test'" />
         <item itemvalue="Gradle.SerializationTest" />
         <item itemvalue="Gradle.debate [build]" />
       </list>
@@ -258,11 +251,26 @@
       <updated>1729611357738</updated>
       <workItem from="1729611358885" duration="1434000" />
       <workItem from="1729614157422" duration="52215000" />
-      <workItem from="1730186709012" duration="9413000" />
+      <workItem from="1730186709012" duration="14287000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraphDef.kt</url>
+          <line>51</line>
+          <properties class="civictech.metagraph.MetaGraphDef" method="isFixPoint">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
