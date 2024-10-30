@@ -2,7 +2,7 @@ package civictech.metagraph
 
 import java.util.*
 
-interface MemberDef<T> {
+interface MemberDef<In> {
     val id: UUID
-    var data: T?
+    var data: In?
 }

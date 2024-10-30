@@ -1,5 +1,8 @@
 package civictech.metagraph
 
+import civictech.test.Null
+import civictech.test.TestIntegrator
+import civictech.test.NullIntegrator
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.containOnly
 import io.kotest.matchers.maps.beEmpty
@@ -13,46 +16,47 @@ import java.util.*
 
 class MetaGraphTest : StringSpec({
     "MetaGraph should be initialized empty" {
-        MetaGraphDef<String>() should beEmpty()
+        MetaGraphDef(NullIntegrator) should beEmpty()
     }
 
     "MetaGraph should allow providing nodes" {
-        val nodeDef1 = NodeDef<String>()
-        val nodeDef2 = NodeDef<String>()
-        val metaGraphDef = MetaGraphDef.withMembers(nodeDef1, nodeDef2)
+        val nodeDef1 = NodeDef<Null>()
+        val nodeDef2 = NodeDef<Null>()
+        val metaGraphDef = MetaGraphDef.withMembers(NullIntegrator, nodeDef1, nodeDef2)
 
         metaGraphDef should contain(nodeDef1.id, Node(metaGraphDef, nodeDef1))
         metaGraphDef should contain(nodeDef2.id, Node(metaGraphDef, nodeDef2))
     }
 
     "MetaGraph should allow providing edges" {
-        val edgeDef1 = EdgeDef<Unit>(
+        val edgeDef1 = EdgeDef<Null>(
             sourceRef = UUID.randomUUID(),
             targetRef = UUID.randomUUID(),
         )
-        val edgeDef2 = EdgeDef<Unit>(
+        val edgeDef2 = EdgeDef<Null>(
             sourceRef = UUID.randomUUID(),
             targetRef = UUID.randomUUID(),
         )
-        val metaGraphDef = MetaGraphDef.withMembers(edgeDef1, edgeDef2)
+        val metaGraphDef = MetaGraphDef.withMembers(NullIntegrator, edgeDef1, edgeDef2)
 
         metaGraphDef should contain(edgeDef1.id, Edge(metaGraphDef, edgeDef1))
         metaGraphDef should contain(edgeDef2.id, Edge(metaGraphDef, edgeDef2))
     }
 
     "MetaGraph should allow basic navigation" {
-        val nodeDef1 = NodeDef<String>()
-        val nodeDef2 = NodeDef<String>()
-        val edgeDef1 = EdgeDef<String>(
+        val nodeDef1 = NodeDef<Null>()
+        val nodeDef2 = NodeDef<Null>()
+        val edgeDef1 = EdgeDef<Null>(
             sourceRef = nodeDef1.id,
             targetRef = nodeDef2.id,
         )
-        val edgeDef2 = EdgeDef<String>(
+        val edgeDef2 = EdgeDef<Null>(
             sourceRef = edgeDef1.id,
             targetRef = edgeDef1.id,
         )
 
         val metaGraphDef = MetaGraphDef.withMembers(
+            NullIntegrator,
             nodeDef1,
             nodeDef2,
             edgeDef1,
@@ -77,43 +81,67 @@ class MetaGraphTest : StringSpec({
 
         edge1!!.incoming should containOnly(Edge(metaGraphDef, edgeDef2))
         edge1.outgoing should containOnly(Edge(metaGraphDef, edgeDef2))
-        (edge1 as Edge<String>).source shouldBe node1
+        (edge1 as Edge<Null, Null>).source shouldBe node1
         (edge1).target shouldBe node2
 
         edge2!!.incoming shouldBe emptyList()
         edge2.outgoing shouldBe emptyList()
-        (edge2 as Edge<String>).source shouldBe edge1
+        (edge2 as Edge<Null, Null>).source shouldBe edge1
         edge2.target shouldBe edge1
     }
 
-    "MetaGraph should allow adding nodes" {
-        val nodeDef1 = NodeDef<String>()
-        val nodeDef2 = NodeDef<String>()
-        val edgeDef1 = EdgeDef<String>(
+    "MetaGraph should allow adding members at runtime" {
+        val nodeDef1 = NodeDef<Null>()
+        val nodeDef2 = NodeDef<Null>()
+        val edgeDef1 = EdgeDef<Null>(
             sourceRef = nodeDef1.id,
             targetRef = nodeDef2.id,
         )
 
-        val metaGraphDef = MetaGraphDef<String>()
+        val metaGraphDef = MetaGraphDef(NullIntegrator)
 
-        val updated: MetaGraphDef<String> = metaGraphDef.apply {
+        metaGraphDef.apply {
             add(nodeDef1)
             add(nodeDef2)
             add(edgeDef1)
         }
 
-        updated shouldContainValue Node(metaGraphDef, nodeDef1)
-        updated shouldContainValue Node(metaGraphDef, nodeDef2)
-        updated shouldContainValue Edge(metaGraphDef, edgeDef1)
+        metaGraphDef shouldContainValue Node(metaGraphDef, nodeDef1)
+        metaGraphDef shouldContainValue Node(metaGraphDef, nodeDef2)
+        metaGraphDef shouldContainValue Edge(metaGraphDef, edgeDef1)
 
         // and navigatino should be possible
-        val node1 = updated[nodeDef1.id]!!
-        val node2 = updated[nodeDef2.id]!!
-        val edge1 = updated[edgeDef1.id]!! as Edge<String>
+        val node1 = metaGraphDef[nodeDef1.id]!!
+        val node2 = metaGraphDef[nodeDef2.id]!!
+        val edge1 = metaGraphDef[edgeDef1.id]!! as Edge<Null, Null>
 
         node1.outgoing should containOnly(edge1)
         node2.incoming should containOnly(edge1)
         edge1.source shouldBe node1
         edge1.target shouldBe node2
     }
+
+    "MetaGraph should allow updating data" {
+        val nodeDef1 = NodeDef<Int>()
+        val metaGraphDef = MetaGraphDef.withMembers(TestIntegrator, nodeDef1)
+        metaGraphDef[nodeDef1.id]?.data = 10
+        metaGraphDef[nodeDef1.id]?.data shouldBe 10
+    }
+
+//    "MetaGraph should propagate updated information" {
+//        // given
+//        val nodeDef1 = NodeDef<Median>()
+//        val nodeDef2 = NodeDef<Median>()
+//        val edgeDef1 = EdgeDef<Median>(
+//            sourceRef = nodeDef1.id,
+//            targetRef = nodeDef2.id,
+//        )
+//        val metaGraphDef = MetaGraphDef.withMembers(TestIntegrator, nodeDef1, nodeDef2, edgeDef1)
+//
+//        // when
+//        metaGraphDef[nodeDef1.id]?.data = Median(10, null)
+//
+//        // then that value propagates along the edge to the other node
+//        metaGraphDef[nodeDef2.id]?.data shouldBe Median(null, 10)
+//    }
 })

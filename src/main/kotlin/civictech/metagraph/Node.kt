@@ -1,6 +1,6 @@
 package civictech.metagraph
 
-data class Node<Data>(
-    override val metaGraphDef: MetaGraphDef<Data>,
-    override val def: NodeDef<Data>
-) : Member<Data>()
+data class Node<In, Out: Credence>(
+    override val metaGraphDef: MetaGraphDef<In, Out>,
+    override val def: NodeDef<In>
+) : Member<In, Out>()
