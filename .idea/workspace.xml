@@ -5,7 +5,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/domain2.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/config/SpringConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/Deliberation.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/DeliberationFactory.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/DeliberationIntegrator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/AgentDef.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/ContestableDef.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/ExpressionDef.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/RelationDef.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Addressable.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Credence.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Degree.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AgentDataFetcher.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/MetArGraphService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Agent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Attack.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Belief.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Contestable.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Expression.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Relation.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Support.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/schema/schema.graphql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/deliberate/DeliberationTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraphDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraph.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Edge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Edge.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Member.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Member.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Node.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Node.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +74,12 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="debate" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="dgs graphql codegen" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -51,10 +90,12 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="Kotlin Data Class" />
+        <option value="Kotlin File" />
         <option value="Kotlin Interface" />
+        <option value="UML Sequence" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Object" />
       </list>
     </option>
   </component>
@@ -76,74 +117,76 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultPlantUmlFileTemplate": "UML Sequence",
     "Gradle.Build debate.executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "Gradle.SerializationTest.AgentDef should serialize to json and back.executor": "Run",
     "Gradle.SerializationTest.executor": "Run",
     "Gradle.Tests in 'debate.test'.executor": "Run",
     "Gradle.debate [build].executor": "Run",
+    "Gradle.debate [clean].executor": "Run",
+    "Gradle.debate [generateJava].executor": "Run",
     "JUnit.civictech in debate.main.executor": "Run",
     "JUnit.civictech.metagraph in debate.main.executor": "Run",
     "Kotlin.MainKt.executor": "Debug",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Main.executor": "Debug",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/merlijn/Library/Mobile Documents/com~apple~CloudDocs/projects/nanquanu/debate/src/main/resources",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/merlijn/Library/Mobile Documents/com~apple~CloudDocs/projects/nanquanu/debate/src/main/kotlin/Main.kt",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reactor",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/kotlin/civictech" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="civictech.deliberate" />
       <recent name="civictech.test" />
       <recent name="civictech.metagraph" />
       <recent name="civictech.domain" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="civictech.metagraph" />
+      <recent name="civictech.deliberate.view" />
+      <recent name="civictech.deliberate.domain" />
+      <recent name="civictech.deliberate" />
+      <recent name="civictech.metagraph.view" />
+      <recent name="civictech.metagraph.def" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="civictech.deliberate.def" />
       <recent name="civictech.metagraph" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="civictech.deliberate.graphql.scalars" />
+    </key>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'debate.test'">
-    <configuration name="SerializationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;civictech.dto.SerializationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.Main">
     <configuration name="Tests in 'debate.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -166,7 +209,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="debate [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="debate [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -177,7 +220,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="build" />
+            <option value="clean" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -188,19 +231,27 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="civictech in debate.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="debate.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="civictech.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="civictech" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="debate [generateJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="generateJava" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
     </configuration>
     <configuration name="civictech.metagraph in debate.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="debate.main" />
@@ -216,13 +267,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="debate.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="civictech.Main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="civictech.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.Main" />
+        <item itemvalue="Gradle.debate [clean]" />
+        <item itemvalue="Gradle.debate [generateJava]" />
         <item itemvalue="Gradle.Tests in 'debate.test'" />
         <item itemvalue="JUnit.civictech.metagraph in debate.main" />
-        <item itemvalue="JUnit.civictech in debate.main" />
-        <item itemvalue="Gradle.SerializationTest" />
-        <item itemvalue="Gradle.debate [build]" />
       </list>
     </recent_temporary>
   </component>
@@ -244,11 +308,53 @@
       <updated>1729611357738</updated>
       <workItem from="1729611358885" duration="1434000" />
       <workItem from="1729614157422" duration="52215000" />
-      <workItem from="1730186709012" duration="16778000" />
+      <workItem from="1730186709012" duration="48887000" />
+      <workItem from="1731152578235" duration="597000" />
+      <workItem from="1731154829665" duration="9850000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/MetArGraphService.kt</url>
+          <line>36</line>
+          <properties class="civictech.deliberate.service.MetArGraphService" method="getAgentStream">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/MetArGraphService.kt</url>
+          <line>36</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AgentDataFetcher.kt</url>
+          <line>37</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AgentDataFetcher.kt</url>
+          <line>37</line>
+          <properties>
+            <option name="lambda-ordinal" value="0" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

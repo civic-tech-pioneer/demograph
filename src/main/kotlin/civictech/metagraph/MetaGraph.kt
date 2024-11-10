@@ -8,7 +8,7 @@ import civictech.metagraph.view.Member
 import civictech.metagraph.view.Node
 import java.util.*
 
-class MetaGraphDef<In, Out : Quantifiable>(
+class MetaGraph<In, Out : Quantifiable>(
     internal val integrator: Integrator<In, Out>,
     private val members: MutableMap<UUID, MemberDef<In, Out>> = mutableMapOf(),
     private val sourceIndex: MutableMap<UUID, MutableSet<EdgeDef<In, Out>>> = mutableMapOf(),
@@ -91,15 +91,15 @@ class MetaGraphDef<In, Out : Quantifiable>(
         fun <In, Out : Quantifiable> withMembers(
             integrator: Integrator<In, Out>,
             vararg members: MemberDef<In, Out>
-        ): MetaGraphDef<In, Out> =
+        ): MetaGraph<In, Out> =
             withMembers(integrator, members.toList())
 
         fun <In, Out : Quantifiable> withMembers(
             integrator: Integrator<In, Out>,
             members: Collection<MemberDef<In, Out>>
-        ): MetaGraphDef<In, Out> {
+        ): MetaGraph<In, Out> {
             val edges = members.filterIsInstance<EdgeDef<In, Out>>()
-            return MetaGraphDef(
+            return MetaGraph(
                 integrator,
                 members.associateBy { it.id }.toMutableMap(),
                 edges.groupBy { it.sourceRef }.mapValues { it.value.toMutableSet() }.toMutableMap(),

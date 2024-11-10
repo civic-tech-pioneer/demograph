@@ -21,16 +21,16 @@ import java.util.*
 
 class MetaGraphTest : StringSpec({
     "MetaGraph should be initialized empty" {
-        MetaGraphDef(NullIntegrator) should beEmpty()
+        MetaGraph(NullIntegrator) should beEmpty()
     }
 
     "MetaGraph should allow providing nodes" {
         val nodeDef1 = NodeDef<Null, Null>()
         val nodeDef2 = NodeDef<Null, Null>()
-        val metaGraphDef = MetaGraphDef.withMembers(NullIntegrator, nodeDef1, nodeDef2)
+        val metaGraph = MetaGraph.withMembers(NullIntegrator, nodeDef1, nodeDef2)
 
-        metaGraphDef should contain(nodeDef1.id, Node(metaGraphDef, nodeDef1))
-        metaGraphDef should contain(nodeDef2.id, Node(metaGraphDef, nodeDef2))
+        metaGraph should contain(nodeDef1.id, Node(metaGraph, nodeDef1))
+        metaGraph should contain(nodeDef2.id, Node(metaGraph, nodeDef2))
     }
 
     "MetaGraph should allow providing edges" {
@@ -42,10 +42,10 @@ class MetaGraphTest : StringSpec({
             sourceRef = UUID.randomUUID(),
             targetRef = UUID.randomUUID(),
         )
-        val metaGraphDef = MetaGraphDef.withMembers(NullIntegrator, edgeDef1, edgeDef2)
+        val metaGraph = MetaGraph.withMembers(NullIntegrator, edgeDef1, edgeDef2)
 
-        metaGraphDef should contain(edgeDef1.id, Edge(metaGraphDef, edgeDef1))
-        metaGraphDef should contain(edgeDef2.id, Edge(metaGraphDef, edgeDef2))
+        metaGraph should contain(edgeDef1.id, Edge(metaGraph, edgeDef1))
+        metaGraph should contain(edgeDef2.id, Edge(metaGraph, edgeDef2))
     }
 
     "MetaGraph should allow basic navigation" {
@@ -60,7 +60,7 @@ class MetaGraphTest : StringSpec({
             targetRef = edgeDef1.id,
         )
 
-        val metaGraphDef = MetaGraphDef.withMembers(
+        val metaGraph = MetaGraph.withMembers(
             NullIntegrator,
             nodeDef1,
             nodeDef2,
@@ -68,10 +68,10 @@ class MetaGraphTest : StringSpec({
             edgeDef2,
         )
 
-        val node1 = metaGraphDef[nodeDef1.id]
-        val node2 = metaGraphDef[nodeDef2.id]
-        val edge1 = metaGraphDef[edgeDef1.id]
-        val edge2 = metaGraphDef[edgeDef2.id]
+        val node1 = metaGraph[nodeDef1.id]
+        val node2 = metaGraph[nodeDef2.id]
+        val edge1 = metaGraph[edgeDef1.id]
+        val edge2 = metaGraph[edgeDef2.id]
 
         node1 shouldNot beNull()
         node2 shouldNot beNull()
@@ -79,13 +79,13 @@ class MetaGraphTest : StringSpec({
         edge2 shouldNot beNull()
 
         node1!!.incoming shouldBe emptyList()
-        node1.outgoing should containOnly(Edge(metaGraphDef, edgeDef1))
+        node1.outgoing should containOnly(Edge(metaGraph, edgeDef1))
 
-        node2!!.incoming should containOnly(Edge(metaGraphDef, edgeDef1))
+        node2!!.incoming should containOnly(Edge(metaGraph, edgeDef1))
         node2.outgoing shouldBe emptyList()
 
-        edge1!!.incoming should containOnly(Edge(metaGraphDef, edgeDef2))
-        edge1.outgoing should containOnly(Edge(metaGraphDef, edgeDef2))
+        edge1!!.incoming should containOnly(Edge(metaGraph, edgeDef2))
+        edge1.outgoing should containOnly(Edge(metaGraph, edgeDef2))
         (edge1 as Edge<Null, Null>).source shouldBe node1
         (edge1).target shouldBe node2
 
@@ -103,22 +103,22 @@ class MetaGraphTest : StringSpec({
             targetRef = nodeDef2.id,
         )
 
-        val metaGraphDef = MetaGraphDef(NullIntegrator)
+        val metaGraph = MetaGraph(NullIntegrator)
 
-        metaGraphDef.apply {
+        metaGraph.apply {
             add(nodeDef1)
             add(nodeDef2)
             add(edgeDef1)
         }
 
-        metaGraphDef shouldContainValue Node(metaGraphDef, nodeDef1)
-        metaGraphDef shouldContainValue Node(metaGraphDef, nodeDef2)
-        metaGraphDef shouldContainValue Edge(metaGraphDef, edgeDef1)
+        metaGraph shouldContainValue Node(metaGraph, nodeDef1)
+        metaGraph shouldContainValue Node(metaGraph, nodeDef2)
+        metaGraph shouldContainValue Edge(metaGraph, edgeDef1)
 
         // and navigatino should be possible
-        val node1 = metaGraphDef[nodeDef1.id]!!
-        val node2 = metaGraphDef[nodeDef2.id]!!
-        val edge1 = metaGraphDef[edgeDef1.id]!! as Edge<Null, Null>
+        val node1 = metaGraph[nodeDef1.id]!!
+        val node2 = metaGraph[nodeDef2.id]!!
+        val edge1 = metaGraph[edgeDef1.id]!! as Edge<Null, Null>
 
         node1.outgoing should containOnly(edge1)
         node2.incoming should containOnly(edge1)
@@ -128,9 +128,9 @@ class MetaGraphTest : StringSpec({
 
     "MetaGraph should allow updating data" {
         val nodeDef1 = NodeDef<Int, Median>()
-        val metaGraphDef = MetaGraphDef.withMembers(TestIntegrator, nodeDef1)
-        metaGraphDef[nodeDef1.id]?.data = 10
-        metaGraphDef[nodeDef1.id]?.data shouldBe 10
+        val metaGraph = MetaGraph.withMembers(TestIntegrator, nodeDef1)
+        metaGraph[nodeDef1.id]?.data = 10
+        metaGraph[nodeDef1.id]?.data shouldBe 10
     }
 
     "MetaGraph should propagate updated information" {
@@ -141,24 +141,24 @@ class MetaGraphTest : StringSpec({
             sourceRef = nodeDef1.id,
             targetRef = nodeDef2.id,
         )
-        val metaGraphDef = MetaGraphDef.withMembers(TestIntegrator, nodeDef1, nodeDef2, edgeDef1)
+        val metaGraph = MetaGraph.withMembers(TestIntegrator, nodeDef1, nodeDef2, edgeDef1)
 
         // when
-        metaGraphDef[nodeDef1.id]?.data = 10
+        metaGraph[nodeDef1.id]?.data = 10
 
         // then we are no longer in a fixpoint
-        metaGraphDef.isFixPoint shouldBe false
+        metaGraph.isFixPoint shouldBe false
         // and when we propagate the update to the edge
-        metaGraphDef.propagateUpdate()
+        metaGraph.propagateUpdate()
         // then we're still not in a fixpoint
-        metaGraphDef.isFixPoint shouldBe false
+        metaGraph.isFixPoint shouldBe false
         // and when we propagate the update to the node
-        metaGraphDef.propagateUpdate()
+        metaGraph.propagateUpdate()
         // then we are in a fixpoint
-        metaGraphDef.isFixPoint shouldBe true
+        metaGraph.isFixPoint shouldBe true
 
         // and the integrated value should now match the original one (median of one value)
-        metaGraphDef[nodeDef2.id]?.integrated?.value shouldBe 10
-        print(metaGraphDef)
+        metaGraph[nodeDef2.id]?.integrated?.value shouldBe 10
+        print(metaGraph)
     }
 })

@@ -1,0 +1,75 @@
+@startuml
+
+package metagraph {
+    package def {
+        class EdgeDef
+        abstract MemberDef
+        class NodeDef
+
+        EdgeDef ..|> MemberDef
+        NodeDef ..|> MemberDef
+    }
+
+    package view {
+        class Edge
+        abstract Member
+        class Node
+
+        Edge ..|> Member
+        Node ..|> Member
+    }
+
+    Edge --> EdgeDef : uses
+    Member --> MemberDef : uses
+    Node --> NodeDef : uses
+
+    interface Integrator
+    interface Quantifiable
+
+    class MetaGraph
+
+    def --> MetaGraph : defines
+    MetaGraph --> view : projects
+
+}
+
+package deliberation {
+    class Deliberation
+
+    package def {
+        interface ContestableDef
+        class AgentDef
+        class ExpressionDef
+        class RelationDef
+
+        ExpressionDef ..|> ContestableDef : extends
+        RelationDef ..|> ContestableDef : extends
+    }
+
+    package view {
+        abstract class Relation
+        class Attack
+        class Support
+
+        Attack ..|> Relation
+        Support ..|> Relation
+
+        class Expression
+
+        abstract class Contestable
+        Relation --|> Contestable
+        Expression --|> Contestable
+    }
+
+
+    MetaGraph <- Deliberation : uses
+    def -> Deliberation : defines
+    Deliberation --> view : projects
+
+    Node --> Expression : defines
+    Edge --> Relation : defines
+    Member --> Contestable : defines
+}
+
+
+@enduml

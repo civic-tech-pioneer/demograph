@@ -1,0 +1,36 @@
+type Query {
+    agents(id: UUID): [Agent]
+}
+
+type Mutation {
+    addAgent(displayName: String): Agent
+    updateAgent(id: UUID!, displayName: String!): Agent
+#    addExpression(expression: String): Node
+#    addAttack(source: UUID!, target: UUID!): Edge
+#    addSupport(source: UUID!, target: UUID!): Edge
+#    addBelief(agent: UUID!, target: UUID!): Belief
+}
+
+type Subscription {
+    agentUpdates: Agent
+}
+
+type Agent {
+    id: UUID!
+    displayName: String
+}
+
+type Node {
+    id: UUID!
+}
+
+type Edge {
+    id: UUID!
+}
+
+type Belief {
+    id: UUID!
+}
+
+scalar UUID
+scalar DateTime
