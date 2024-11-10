@@ -5,40 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/domain2.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/config/SpringConfig.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/Deliberation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/DeliberationFactory.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/DeliberationIntegrator.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/AgentDef.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/ContestableDef.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/ExpressionDef.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/def/RelationDef.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Addressable.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Credence.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Degree.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AgentDataFetcher.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/MetArGraphService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Agent.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Attack.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Belief.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Contestable.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Expression.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Relation.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/view/Support.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/schema/schema.graphql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/deliberate/DeliberationTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/config/WebFluxConfiguration.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/config/WebMvcConfiguration.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraphDef.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/MetaGraph.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Edge.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Edge.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Member.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Member.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Node.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/metagraph/view/Node.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/metagraph/MetaGraphTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/schema/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/schema/schema.graphql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,8 +64,8 @@
         <option value="Kotlin File" />
         <option value="Kotlin Interface" />
         <option value="UML Sequence" />
-        <option value="Kotlin Class" />
         <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -179,6 +149,7 @@
       <recent name="civictech.metagraph.def" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="civictech.config" />
       <recent name="civictech.deliberate.def" />
       <recent name="civictech.metagraph" />
     </key>
@@ -268,6 +239,7 @@
       </method>
     </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="dev" />
       <module name="debate.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="civictech.Main" />
       <extension name="coverage">
@@ -280,6 +252,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Gradle.debate [clean]" />
+      <item itemvalue="Gradle.debate [generateJava]" />
+      <item itemvalue="Gradle.Tests in 'debate.test'" />
+      <item itemvalue="JUnit.civictech.metagraph in debate.main" />
+      <item itemvalue="Spring Boot.Main" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Main" />
@@ -299,6 +278,13 @@
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringProfilesService">
+    <option name="activeProfiles">
+      <map>
+        <entry key="debate.main" value="dev" />
+      </map>
+    </option>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="" />
@@ -310,48 +296,12 @@
       <workItem from="1729614157422" duration="52215000" />
       <workItem from="1730186709012" duration="48887000" />
       <workItem from="1731152578235" duration="597000" />
-      <workItem from="1731154829665" duration="9850000" />
+      <workItem from="1731154829665" duration="15656000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-function">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/MetArGraphService.kt</url>
-          <line>36</line>
-          <properties class="civictech.deliberate.service.MetArGraphService" method="getAgentStream">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/MetArGraphService.kt</url>
-          <line>36</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AgentDataFetcher.kt</url>
-          <line>37</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AgentDataFetcher.kt</url>
-          <line>37</line>
-          <properties>
-            <option name="lambda-ordinal" value="0" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

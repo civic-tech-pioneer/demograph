@@ -1,18 +1,14 @@
 type Query {
-    agents(id: UUID): [Agent]
+    agents(id: UUID): [Agent!]
 }
 
 type Mutation {
     addAgent(displayName: String): Agent
     updateAgent(id: UUID!, displayName: String!): Agent
-#    addExpression(expression: String): Node
-#    addAttack(source: UUID!, target: UUID!): Edge
-#    addSupport(source: UUID!, target: UUID!): Edge
-#    addBelief(agent: UUID!, target: UUID!): Belief
 }
 
 type Subscription {
-    agentUpdates: Agent
+    agentUpdates: Agent!
 }
 
 type Agent {
