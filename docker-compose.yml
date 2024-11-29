@@ -1,0 +1,27 @@
+services:
+  mongo:
+    image: mongo:8.0.3 # Use the desired MongoDB version
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017" # Expose MongoDB on localhost
+    volumes:
+      - mongo-data:/data/db # Persistent volume for database data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root # Default username
+      MONGO_INITDB_ROOT_PASSWORD: example # Default password
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    ports:
+      - "8081:8081" # Expose Mongo Express on localhost
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_SERVER: mongo # Connect to the Mongo service
+
+volumes:
+  mongo-data:
+    driver: local # Persistent storage

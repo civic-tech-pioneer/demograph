@@ -1,14 +1,30 @@
 type Query {
     agents(id: UUID): [Agent!]
+
+    contestable(id: UUID!): Contestable
+    markdownNode(id: UUID!): MarkdownNode
+    link(id: UUID!): Link
+    links(id: UUID!): Links
 }
 
 type Mutation {
     addAgent(displayName: String): Agent
     updateAgent(id: UUID!, displayName: String!): Agent
+
+    addMarkdownNode(text: String!): MarkdownNode!
+    updateMarkdownNode(id: UUID!, text: String!): MarkdownNode
+
+    addLink(from: UUID!, to: UUID!): Link
+    removeLink(id: UUID!): Result
 }
 
 type Subscription {
     agentUpdates: Agent!
+}
+
+enum Result {
+    Success
+    Failure
 }
 
 type Agent {
@@ -16,12 +32,28 @@ type Agent {
     displayName: String
 }
 
-type Node {
+type Contestable {
     id: UUID!
 }
 
-type Edge {
+type Node { # }implements Contestable {
     id: UUID!
+}
+
+type MarkdownNode { #implements Contestable & Node {
+    id: UUID!
+    text: String!
+}
+
+type Link { # implements Contestable {
+    id: UUID!
+    sourceRef: UUID!
+    targetRef: UUID!
+}
+
+type Links {
+    sourceRefs: [Link!]!
+    targetRefs: [Link!]!
 }
 
 type Belief {
@@ -29,4 +61,4 @@ type Belief {
 }
 
 scalar UUID
-scalar DateTime
+#scalar DateTime

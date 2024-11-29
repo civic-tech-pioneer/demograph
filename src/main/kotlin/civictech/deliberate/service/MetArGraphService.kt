@@ -34,5 +34,5 @@ class MetArGraphService(private var deliberation: Deliberation) {
     fun updateAgent(id: UUID, displayName: String): Agent? =
         deliberation.updateAgent(id, displayName)?.also(agentStream::next)
 
-    fun getAgentStream(): Flux<Agent> = agentsFlux
+    fun getAgentStream(): Flux<Agent> = agentsFlux.filter { _ -> true }
 }

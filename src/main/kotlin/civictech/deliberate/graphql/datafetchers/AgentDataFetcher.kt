@@ -1,7 +1,7 @@
 package civictech.deliberate.graphql.datafetchers
 
 import civictech.deliberate.service.MetArGraphService
-import com.netflix.dgs.codegen.generated.types.Agent
+import civictech.dgs.types.Agent
 import com.netflix.graphql.dgs.*
 import org.reactivestreams.Publisher
 import java.util.*
@@ -17,23 +17,23 @@ class AgentDataFetcher(
     @DgsQuery
     fun agents(@InputArgument("id") id: UUID?): List<Agent> {
         return agentService.agents(id).map {
-            Agent(it.id, it.displayName)
+            Agent({ it.id }, { it.displayName })
         }
     }
 
     @DgsMutation
     fun addAgent(@InputArgument("displayName") displayName: String): Agent {
         val added = agentService.addAgent(displayName)
-        return Agent(added.id, added.displayName)
+        return Agent({ added.id }, { added.displayName })
     }
 
     @DgsMutation
     fun updateAgent(@InputArgument("id") id: UUID, @InputArgument("displayName") displayName: String): Agent? {
         val updated = agentService.updateAgent(id, displayName)
-        return updated?.let{ Agent(it.id, it.displayName) }
+        return updated?.let{ Agent({ it.id }, { it.displayName }) }
     }
 
     @DgsSubscription
     fun agentUpdates(): Publisher<Agent> =
-        agentService.getAgentStream().map { Agent(it.id, it.displayName) }
+        agentService.getAgentStream().map { Agent({ it.id }, { it.displayName }) }
 }

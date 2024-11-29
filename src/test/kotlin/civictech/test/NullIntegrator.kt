@@ -1,8 +1,8 @@
 package civictech.test
 
+import civictech.metagraph.Integrator
 import civictech.metagraph.Quantifiable
 import civictech.metagraph.view.Edge
-import civictech.metagraph.Integrator
 import civictech.metagraph.view.Node
 
 object NullIntegrator : Integrator<Null, Null> {
