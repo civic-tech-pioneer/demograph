@@ -32,23 +32,31 @@ type Agent {
     displayName: String
 }
 
-type Contestable {
+interface Contestable {
     id: UUID!
+    sourceLinks: [Link!]
+    targetLinks: [Link!]
 }
 
-type Node { # }implements Contestable {
+interface Node implements Contestable {
     id: UUID!
+    sourceLinks: [Link!]
+    targetLinks: [Link!]
 }
 
-type MarkdownNode { #implements Contestable & Node {
+type MarkdownNode implements Contestable & Node {
     id: UUID!
     text: String!
+    sourceLinks: [Link!]
+    targetLinks: [Link!]
 }
 
-type Link { # implements Contestable {
+type Link implements Contestable {
     id: UUID!
     sourceRef: UUID!
     targetRef: UUID!
+    sourceLinks: [Link!]
+    targetLinks: [Link!]
 }
 
 type Links {

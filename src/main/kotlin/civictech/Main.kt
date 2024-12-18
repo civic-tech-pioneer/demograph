@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 
-@SpringBootApplication
 @AutoConfiguration
+@SpringBootApplication
 class Main
 
 fun main(args: Array<String>) {

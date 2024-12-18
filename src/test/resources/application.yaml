@@ -14,3 +14,18 @@ spring:
     schema:
       printer:
         enabled: true
+  thymeleaf:
+    enabled: true
+    cache: false
+
+auth:
+  jwt:
+    secret: "aVerySecureKeyThatIsStrongEnoughForMac"
+    expiration: PT1H
+
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

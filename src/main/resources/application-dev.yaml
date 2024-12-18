@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      username: root
+      password: example
+
+auth:
+  jwt:
+    secret: "This password is for development purposes only. It should be injected from the vault instead via environment variables"
+
+logging.level.org.springframework.web: DEBUG
+logging.level.org.springframework.web.reactive: DEBUG

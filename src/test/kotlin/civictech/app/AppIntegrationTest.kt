@@ -104,6 +104,31 @@ class AppIntegrationTest : StringSpec() {
             link.sourceRef shouldBe attack
             link.targetRef shouldBe expression
         }
+
+        "when linking two nodes, the nodes should have their source/target set appropriately " {
+            // Given some markdown nodes
+            val expression = withMarkdownNode("I'm an expression")
+            val attack = withMarkdownNode("I'm an attacking argument")
+
+            // When we create a link between them
+            val createLinkQuery = buildMutation(Codec) {
+                addLink(attack, expression) {
+                    id
+                    sourceRef
+                    targetRef
+                }
+            }
+            val link = dgsGraphQLClient
+                .executeQuery(createLinkQuery)
+                .extractValueAsObject("addLink", Link::class.java)
+
+            val linkedExpression = getMarkdownNode(expression)
+            val linkedAttack = getMarkdownNode(attack)
+
+            linkedExpression.targetLinks shouldBe listOf(link.id)
+            linkedAttack.sourceLinks shouldBe listOf(link.id)
+
+        }
     }
 
     private fun withMarkdownNode(text: String): UUID {
@@ -116,4 +141,23 @@ class AppIntegrationTest : StringSpec() {
         val result = dgsGraphQLClient.executeQuery(addMarkdown)
         return result.extractValueAsObject("addMarkdownNode.id", UUID::class.java)
     }
+
+    private fun getMarkdownNode(uuid: UUID) = dgsGraphQLClient
+        .executeQuery(buildQuery(Codec) {
+            markdownNode(uuid) {
+                id
+                text
+                sourceLinks {
+                    id
+                    sourceRef
+                    targetRef
+                }
+                targetLinks {
+                    id
+                    sourceRef
+                    targetRef
+                }
+            }
+        })
+        .extractValueAsObject("markdownNode", MarkdownNode::class.java)
 }

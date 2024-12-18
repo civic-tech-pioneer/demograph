@@ -1,0 +1,75 @@
+@startuml
+skinparam componentStyle rectangle
+
+title Deliberation Graph Architecture
+
+component "MongoDB" as Mongo {
+    [Nodes Collection] as nodeCollection
+    [Links Collection] as linksCollection
+    [Attitude Collection] as attitudeCollection
+    [Oplog] as opLog
+
+    nodeCollection --> opLog
+    linksCollection --> opLog
+    attitudeCollection --> opLog
+}
+
+component "Redis Streams" as Redis {
+    [Stream: updates:nodes]
+    [Stream: updates:links]
+    [Stream: updates:beliefs]
+}
+
+component "Subscription Manager" as SubManager {
+    [Subscription Mapping]
+    [Client Subscriptions]
+}
+
+component "GraphQL Backend" as GraphQL {
+    [Query API]
+    [Subscription API]
+    [Propagation Engine]
+}
+
+database "Clients" as Clients {
+    [Client Viewports]
+}
+
+component "Clients" as User {
+    [Client Applications]
+}
+
+component "MongoDB Change Stream Listener" as ChangeStream {
+    [Change Processor] as changeProcessor
+    [Redis Cache Updater] as redisCacheUpdater
+    [Stream Publisher] as redisCacheUpdatePublisher
+
+    changeProcessor -> redisCacheUpdater
+    redisCacheUpdater -> redisCacheUpdatePublisher
+}
+
+component "Awareness" as awareness {
+    [Session 1] as session1
+    [Session n] as sessionN
+
+    [Aggregate Attention] as aggAttention
+
+    aggAttention <-- session1 : update interests
+    aggAttention <-- sessionN : update interests
+}
+
+Mongo -[hidden]down-> ChangeStream
+Redis -[hidden]down-> SubManager
+
+redisCacheUpdatePublisher --> Redis: "Publishes Changes to Streams"
+Redis --> SubManager: "Notifies Subscription Manager"
+SubManager --> GraphQL: "Updates Subscribed Clients"
+GraphQL --> Clients: "Push Real-Time Updates"
+
+Clients --> GraphQL: "Queries / Subscribes"
+GraphQL --> Mongo: "Query Node/Link/Belief"
+GraphQL --> Redis: "Fetch Cached Data"
+GraphQL --> SubManager: "Manage Subscriptions"
+
+opLog -> changeProcessor : "Triggers on updates"
+@enduml

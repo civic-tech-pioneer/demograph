@@ -1,11 +1,10 @@
 spring:
   application:
     name: metargraph
-  main:
-    web-application-type: reactive
   data:
     mongodb:
       uuid-representation: standard
+      authentication-database: admin
   graphql:
     graphiql:
       enabled: true
@@ -14,3 +13,9 @@ spring:
     schema:
       printer:
         enabled: true
+  main:
+    web-application-type: reactive
+
+auth:
+  jwt:
+    expiration: "1h"
