@@ -26,19 +26,22 @@ abstract class Relation : Contestable {
         }
 
     val target: Contestable?
-        get() = member.target?.let { when(it) {
-            is Node -> Expression(deliberation, it)
-            is Edge -> {
-                when(val data = it.def.data) {
-                    is RelationDef ->
-                        when(data.semantics) {
-                            Semantics.Support -> Support(deliberation, it)
-                            Semantics.Attack -> Attack(deliberation, it)
-                        }
-                    else -> null
+        get() = member.target?.let {
+            when (it) {
+                is Node -> Expression(deliberation, it)
+                is Edge -> {
+                    when (val data = it.def.data) {
+                        is RelationDef ->
+                            when (data.semantics) {
+                                Semantics.Support -> Support(deliberation, it)
+                                Semantics.Attack -> Attack(deliberation, it)
+                            }
+
+                        else -> null
+                    }
                 }
+
+                else -> null
             }
-            else -> null
         }
-    }
 }

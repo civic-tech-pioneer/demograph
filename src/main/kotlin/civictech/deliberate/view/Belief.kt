@@ -7,7 +7,7 @@ import civictech.deliberate.domain.Degree
 class Belief(
     val contestable: Contestable,
     val agentDef: AgentDef
-    ) {
+) {
 
     var strength: Degree?
         get() = contestableDef?.beliefs?.get(agentDef)

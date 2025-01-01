@@ -1,12 +1,15 @@
 package civictech
 
 import org.springframework.boot.WebApplicationType
-import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
 
-@AutoConfiguration
-@SpringBootApplication
+@SpringBootApplication(
+    exclude = [
+        MongoReactiveRepositoriesAutoConfiguration::class
+    ]
+)
 class Main
 
 fun main(args: Array<String>) {

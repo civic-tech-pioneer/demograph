@@ -32,6 +32,22 @@ class ContestableService(
     suspend fun getLink(id: UUID): Link? =
         linkRepository.findById(id)?.let(::toDomainModel)
 
+    suspend fun getLinksBySourceRefs(sourceRefs: Set<UUID>): Map<UUID, List<Link>> {
+        if (sourceRefs.isEmpty()) return emptyMap()
+
+        return linkRepository.findBySourceRefIn(sourceRefs)
+            .map(::toDomainModel)
+            .groupBy(Link::sourceRef)
+    }
+
+    suspend fun getLinksByTargetRefs(targetRefs: Set<UUID>): Map<UUID, List<Link>> {
+        if (targetRefs.isEmpty()) return emptyMap()
+
+        return linkRepository.findByTargetRefIn(targetRefs)
+            .map(::toDomainModel)
+            .groupBy(Link::targetRef)
+    }
+
     suspend fun addLink(from: UUID, to: UUID): Link = linkRepository.save(
         LinkDTO(
             sourceRef = from,

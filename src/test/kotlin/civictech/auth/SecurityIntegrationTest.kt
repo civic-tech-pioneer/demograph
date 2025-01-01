@@ -1,13 +1,14 @@
 package civictech.auth
 
-import civictech.test.MongoIntegrationTestConfiguration
-import io.kotest.common.runBlocking
+import civictech.test.PostgresIntegrationTestConfiguration
+import io.kotest.engine.runBlocking
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
@@ -25,17 +26,21 @@ import org.springframework.web.bind.annotation.RestController
 @ContextConfiguration(
     classes = [
         AuthController::class,
-        SecurityConfig::class,
+        AuthConfig::class,
+        DefaultReactiveUserDetailsService::class,
+        PostgresIntegrationTestConfiguration::class,
         SecurityIntegrationTest.AuthTestConfig::class,
         TokenProvider::class,
         UserService::class,
         UserRepository::class,
-        MongoIntegrationTestConfiguration::class,
-        MongoReactiveUserDetailsService::class
     ]
 )
 @AutoConfigureWebTestClient
-@EnableAutoConfiguration
+@EnableAutoConfiguration(
+    exclude = [
+        MongoReactiveRepositoriesAutoConfiguration::class,
+    ]
+)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SecurityIntegrationTest {
 

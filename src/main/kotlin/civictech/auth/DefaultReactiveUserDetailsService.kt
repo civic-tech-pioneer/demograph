@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
 
 @Service
-class MongoReactiveUserDetailsService(
+class DefaultReactiveUserDetailsService(
     private val userRepository: UserRepository,
 ) : ReactiveUserDetailsService {
 
@@ -20,12 +20,12 @@ class MongoReactiveUserDetailsService(
             throw BadCredentialsException("Username cannot be null")
 
         val user =
-            userRepository.findByUsername(username) ?: throw UsernameNotFoundException("User '$username' not found")
+            userRepository.findByName(username) ?: throw UsernameNotFoundException("User '$username' not found")
 
         val authorities = user.roles
             .map { "ROLE_$it" }
             .map(::SimpleGrantedAuthority)
 
-        User(user.username, user.password, authorities)
+        User(user.name, user.password, authorities)
     }
 }

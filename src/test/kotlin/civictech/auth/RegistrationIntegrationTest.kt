@@ -1,18 +1,16 @@
 package civictech.auth
 
 import civictech.test.DgsGraphQlClientTestConfig
-import civictech.test.MongoIntegrationTestConfiguration
+import civictech.test.PostgresIntegrationTestConfiguration
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import io.kotest.common.runBlocking
+import io.kotest.engine.runBlocking
 import io.kotest.matchers.collections.containOnly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.string.contain
 import kotlinx.coroutines.test.runTest
-import org.assertj.core.api.AssertionsForClassTypes.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,8 +29,8 @@ import org.springframework.test.web.reactive.server.returnResult
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(
     classes = [
-        MongoIntegrationTestConfiguration::class,
         DgsGraphQlClientTestConfig::class,
+        PostgresIntegrationTestConfiguration::class,
         RegistrationIntegrationTest.TestConfig::class,
     ]
 )
@@ -83,10 +81,10 @@ class RegistrationIntegrationTest {
         response should contain("token")
 
         // Verify user is saved in MongoDB
-        val savedUser = userRepository.findByUsername("testuser")
+        val savedUser = userRepository.findByName("testuser")
 
         savedUser shouldNotBe null
-        savedUser?.username shouldBe "testuser"
+        savedUser?.name shouldBe "testuser"
         savedUser?.roles should containOnly("USER")
     }
 
@@ -129,10 +127,10 @@ class RegistrationIntegrationTest {
             .expectHeader().location("/auth/login.html")
 
         // Verify user is saved in MongoDB
-        val savedUser = userRepository.findByUsername("form-user")
+        val savedUser = userRepository.findByName("form-user")
 
         savedUser shouldNotBe null
-        savedUser?.username shouldBe "form-user"
+        savedUser?.name shouldBe "form-user"
         savedUser?.roles should containOnly("USER")
     }
 

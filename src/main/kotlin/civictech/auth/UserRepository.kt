@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : CoroutineCrudRepository<UserDocument, String> {
-    suspend fun findByUsername(username: String): UserDocument?
+    suspend fun findByName(name: String): UserDocument?
 }

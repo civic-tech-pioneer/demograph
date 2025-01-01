@@ -4,7 +4,6 @@ import civictech.deliberate.def.AgentDef
 import civictech.deliberate.def.ContestableDef
 import civictech.deliberate.def.ExpressionDef
 import civictech.deliberate.def.RelationDef
-import civictech.deliberate.view.Contestable
 import civictech.deliberate.domain.Credence
 import civictech.metagraph.MetaGraph
 import civictech.metagraph.def.EdgeDef

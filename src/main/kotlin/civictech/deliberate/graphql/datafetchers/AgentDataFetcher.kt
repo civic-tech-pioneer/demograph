@@ -8,7 +8,8 @@ import java.util.*
 
 @DgsComponent
 class AgentDataFetcher(
-    private val agentService: MetArGraphService) {
+    private val agentService: MetArGraphService
+) {
 
     /**
      * This dataFetcher resolves the agents field on Query.
@@ -30,7 +31,7 @@ class AgentDataFetcher(
     @DgsMutation
     fun updateAgent(@InputArgument("id") id: UUID, @InputArgument("displayName") displayName: String): Agent? {
         val updated = agentService.updateAgent(id, displayName)
-        return updated?.let{ Agent({ it.id }, { it.displayName }) }
+        return updated?.let { Agent({ it.id }, { it.displayName }) }
     }
 
     @DgsSubscription

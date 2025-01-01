@@ -11,10 +11,10 @@ data class RelationDef(
     override val beliefs: MutableMap<AgentDef, Degree> = mutableMapOf()
 ) : ContestableDef {
 
-        companion object {
-            enum class Semantics {
-                Support,
-                Attack
-            }
+    companion object {
+        enum class Semantics {
+            Support,
+            Attack
         }
+    }
 }

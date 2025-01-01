@@ -1,6 +1,6 @@
 package civictech.deliberate.domain
 
-import java.util.UUID
+import java.util.*
 
 data class Link(
     val id: UUID,

@@ -1,6 +1,6 @@
 package civictech.auth
 
-import civictech.test.MongoIntegrationTestConfiguration
+import civictech.test.PostgresIntegrationTestConfiguration
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -9,32 +9,31 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @ContextConfiguration(
     classes = [
-        MongoReactiveUserDetailsService::class,
-        MongoIntegrationTestConfiguration::class,
+        DefaultReactiveUserDetailsService::class,
+        PostgresIntegrationTestConfiguration::class,
         UserRepository::class
     ]
 )
-@EnableMongoRepositories
 @EnableAutoConfiguration
-class MongoReactiveUserDetailsServiceTest {
+class DefaultReactiveUserDetailsServiceTest {
     @Autowired
     lateinit var userRepository: UserRepository
 
     @Autowired
-    lateinit var service: MongoReactiveUserDetailsService
+    lateinit var service: DefaultReactiveUserDetailsService
 
     @Test
     fun userCanBeRetrieved() = runTest {
         userRepository.save(
             UserDocument(
-                username = "username",
+                version = null,
+                name = "username",
                 password = "password",
                 roles = listOf("USER")
             )

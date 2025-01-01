@@ -1,6 +1,6 @@
 package civictech.deliberate.domain
 
-import java.util.UUID
+import java.util.*
 
 interface Addressable {
     val id: UUID

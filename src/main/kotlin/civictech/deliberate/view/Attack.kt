@@ -8,7 +8,7 @@ import civictech.metagraph.view.Edge
 class Attack(
     override val deliberation: Deliberation,
     override val member: Edge<ContestableDef, Credence>,
-): Relation() {
+) : Relation() {
 
 
 }

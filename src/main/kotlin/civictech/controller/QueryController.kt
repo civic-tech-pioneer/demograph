@@ -7,7 +7,7 @@ import reactor.core.publisher.Flux
 
 @Controller
 class QueryController(private val agentService: MetArGraphService) {
-//    @SubscriptionMapping
+    //    @SubscriptionMapping
     fun agentUpdates(): Flux<Agent> =
         agentService.getAgentStream().map { Agent({ it.id }, { it.displayName }) }
 }

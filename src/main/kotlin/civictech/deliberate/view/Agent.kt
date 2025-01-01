@@ -2,11 +2,12 @@ package civictech.deliberate.view
 
 import civictech.deliberate.Deliberation
 import civictech.deliberate.def.AgentDef
-import java.util.UUID
+import java.util.*
 
 class Agent(
     val deliberation: Deliberation,
-    val agentDef: AgentDef) {
+    val agentDef: AgentDef
+) {
 
     val id: UUID
         get() = agentDef.id

@@ -19,3 +19,8 @@ spring:
 auth:
   jwt:
     expiration: "1h"
+
+dgs:
+  graphql:
+    dataloader:
+      ticker-mode-enabled: true

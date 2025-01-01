@@ -3,10 +3,21 @@ spring:
     mongodb:
       username: root
       password: example
+  flyway:
+    url: "jdbc:postgresql://localhost:5432/deliberation"
+    user: root
+    password: example
+  r2dbc:
+    username: root
+    password: example
+    url: "r2dbc:postgresql://localhost:5432/deliberation"
 
 auth:
   jwt:
     secret: "This password is for development purposes only. It should be injected from the vault instead via environment variables"
 
-logging.level.org.springframework.web: DEBUG
-logging.level.org.springframework.web.reactive: DEBUG
+logging.level.org.springframework: DEBUG
+logging.level.kotlinx: DEBUG
+logging.level.org.dataloader: DEBUG
+logging.level.graphql: DEBUG
+logging.level.com.netflix: DEBUG

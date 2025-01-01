@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/auth/AuthController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/auth/AuthController.kt" afterDir="false" />
-    </list>
+    <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +45,18 @@
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="dgs graphql codegen" type="c8890929:TasksNode$1" />
               </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="debate" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="debate" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
             </expand>
             <select />
           </tree_state>
@@ -59,14 +68,15 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Data Class" />
-        <option value="Kotlin File" />
         <option value="UML Sequence" />
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Annotation" />
-        <option value="Kotlin Class" />
         <option value="JUnit5 Test Class" />
         <option value="package.json" />
+        <option value="Class" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -94,8 +104,11 @@
     "DefaultPlantUmlFileTemplate": "UML Sequence",
     "Gradle.AppIntegrationTest (1).executor": "Run",
     "Gradle.AppIntegrationTest.executor": "Run",
+    "Gradle.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately.executor": "Run",
     "Gradle.Build debate.executor": "Run",
+    "Gradle.DefaultReactiveUserDetailsServiceTest.executor": "Debug",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.LinkRepositoryTest.LinkRepository should retrieve links by sourceRefs.executor": "Run",
     "Gradle.MetaGraphTest.executor": "Run",
     "Gradle.MongoDbTest.executor": "Run",
     "Gradle.MongoReactiveUserDetailsServiceTest.executor": "Run",
@@ -116,17 +129,20 @@
     "Gradle.SpringMongoDbKoTest.executor": "Debug",
     "Gradle.SpringMongoDbTest.executor": "Run",
     "Gradle.Tests in 'civictech'.executor": "Run",
+    "Gradle.Tests in 'civictech.app'.executor": "Run",
     "Gradle.Tests in 'civictech.auth'.executor": "Run",
     "Gradle.Tests in 'civictech.db'.executor": "Run",
     "Gradle.Tests in 'debate.test'.executor": "Run",
     "Gradle.TokenProviderTest.executor": "Run",
     "Gradle.TokenProviderTest.tokenProvider.executor": "Run",
     "Gradle.debate [build].executor": "Run",
+    "Gradle.debate [classes].executor": "Run",
     "Gradle.debate [clean].executor": "Run",
     "Gradle.debate [generateJava].executor": "Run",
     "Gradle.debate [testClasses].executor": "Run",
     "JUnit.civictech in debate.main.executor": "Run",
     "JUnit.civictech.metagraph in debate.main.executor": "Run",
+    "JavaVariableFindUsagesOptions.isSearchForAccessors": "true",
     "Kotest.AppIntegrationTest: expressions allow updatse.executor": "Run",
     "Kotest.AppIntegrationTest: when creating a markdown node, then it should be retrievable (DGS).executor": "Run",
     "Kotest.AppIntegrationTest: when linking two markdown nodes, then the edge should be retrievable.executor": "Run",
@@ -146,7 +162,7 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.Main.executor": "Run",
+    "Spring Boot.Main.executor": "Debug",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
@@ -158,11 +174,16 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "/Users/merlijn/Library/Mobile Documents/com~apple~CloudDocs/projects/nanquanu/debate/src/main/kotlin/Main.kt",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "spring",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="ReactorSettings">
@@ -204,6 +225,7 @@
       <recent name="civictech.auth" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="civictech.deliberate.graphql.dataloaders" />
       <recent name="civictech.config" />
       <recent name="civictech.deliberate.def" />
       <recent name="civictech.metagraph" />
@@ -217,8 +239,8 @@
       <command value="gradle generateJava" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'civictech.auth'">
-    <configuration name="RegistrationIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.Tests in 'debate.test'">
+    <configuration name="AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -231,7 +253,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;civictech.auth.RegistrationIntegrationTest&quot;" />
+            <option value="&quot;civictech.app.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -242,7 +264,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="RegistrationIntegrationTest.failed form registration" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Tests in 'civictech.app'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -255,55 +277,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;civictech.auth.RegistrationIntegrationTest.failed form registration&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="SecurityIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;civictech.auth.SecurityIntegrationTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'civictech.auth'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;civictech.auth.*&quot;" />
+            <option value="&quot;civictech.app.*&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -336,29 +310,74 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="debate [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="debate [generateJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="generateJava" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="dev,clickops" />
       <module name="debate.main" />
+      <option name="PROGRAM_PARAMETERS" value="--debug" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="civictech.Main" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.RegistrationIntegrationTest" />
-      <item itemvalue="Gradle.RegistrationIntegrationTest.failed form registration" />
-      <item itemvalue="Gradle.Tests in 'civictech.auth'" />
-      <item itemvalue="Gradle.SecurityIntegrationTest" />
+      <item itemvalue="Gradle.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately" />
+      <item itemvalue="Gradle.Tests in 'civictech.app'" />
+      <item itemvalue="Gradle.debate [clean]" />
+      <item itemvalue="Gradle.debate [generateJava]" />
       <item itemvalue="Gradle.Tests in 'debate.test'" />
       <item itemvalue="Spring Boot.Main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'civictech.auth'" />
-        <item itemvalue="Gradle.RegistrationIntegrationTest" />
-        <item itemvalue="Gradle.RegistrationIntegrationTest.failed form registration" />
-        <item itemvalue="Gradle.SecurityIntegrationTest" />
         <item itemvalue="Gradle.Tests in 'debate.test'" />
+        <item itemvalue="Gradle.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately" />
+        <item itemvalue="Gradle.debate [generateJava]" />
+        <item itemvalue="Gradle.debate [clean]" />
+        <item itemvalue="Gradle.Tests in 'civictech.app'" />
       </list>
     </recent_temporary>
   </component>

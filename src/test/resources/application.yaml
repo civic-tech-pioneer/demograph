@@ -24,8 +24,16 @@ auth:
     expiration: PT1H
 
 
-logging:
-  level:
-    org:
-      springframework:
-        security: DEBUG
+#logging.level:
+#  com.netflix: DEBUG
+#  graphql: DEBUG
+#  io.r2dbc: DEBUG
+#  reactor: DEBUG
+#  kotlinx: DEBUG
+#  org.dataloader: DEBUG
+#  org.springframework: DEBUG
+
+dgs:
+  graphql:
+    dataloader:
+      ticker-mode-enabled: true

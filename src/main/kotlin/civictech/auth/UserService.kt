@@ -10,11 +10,12 @@ class UserService(
     private val tokenProvider: TokenProvider
 ) {
     suspend fun registerUser(username: String, password: String, roles: List<String> = listOf("USER")): String {
-        userRepository.findByUsername(username)?.run { throw UserExistsException(username) }
+        userRepository.findByName(username)?.run { throw UserExistsException(username) }
 
         val encodedPassword = passwordEncoder.encode(password)
         val user = UserDocument(
-            username = username,
+            version = null,
+            name = username,
             password = encodedPassword,
             roles = roles
         )

@@ -22,6 +22,32 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_SERVER: mongo # Connect to the Mongo service
 
+  postgres:
+    container_name: postgres
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: example
+      PGDATA: /data/postgres
+      POSTGRES_DB: deliberation
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  postgres:
+    driver: bridge
+
 volumes:
+  postgres:
   mongo-data:
     driver: local # Persistent storage

@@ -26,7 +26,7 @@ import java.net.URI
 @EnableConfigurationProperties(JwtConfig::class)
 @EnableReactiveMethodSecurity(useAuthorizationManager = true)
 @EnableWebFluxSecurity
-class SecurityConfig(
+class AuthConfig(
     private val jwtConfig: JwtConfig
 ) {
     @Bean

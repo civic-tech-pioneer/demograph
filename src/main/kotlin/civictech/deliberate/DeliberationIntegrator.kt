@@ -1,7 +1,6 @@
 package civictech.deliberate
 
 import civictech.deliberate.def.ContestableDef
-import civictech.deliberate.view.Contestable
 import civictech.deliberate.domain.Credence
 import civictech.metagraph.Integrator
 import civictech.metagraph.view.Edge
