@@ -6,7 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
     id("org.springframework.boot") version "3.3.5"
     kotlin("jvm") version "2.0.21"
-    kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.spring") version "2.1.0"
 }
 
 group = "civic-tech-pioneer"
@@ -47,11 +47,11 @@ tasks.generateJava {
     )
 }
 
-val coroutinesVersion = "1.9.0"
+val coroutinesVersion = "1.10.1"
 val koTestVersion = "6.0.0.M1"
 
 dependencies {
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.0")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
 
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:9.1.3"))
