@@ -51,7 +51,7 @@ val coroutinesVersion = "1.10.1"
 val koTestVersion = "6.0.0.M1"
 
 dependencies {
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.0")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.0")
 
     implementation(platform("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:9.1.3"))
