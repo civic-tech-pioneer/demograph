@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="" />
+    <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="Implement registering attitudes&#10;Changed registration to no longer return a token&#10;Replace User.id identifier with User.name">
+      <change afterPath="$PROJECT_DIR$/doc/propagation.puml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Attitude.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Bucket.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/ChangeType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/ContestableChange.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/ContestableUpdater.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/SourceType.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AttitudeDataFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AttitudeDataFetcher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/app/AppIntegrationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/app/AppIntegrationTest.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,6 +88,7 @@
         <option value="package.json" />
         <option value="Class" />
         <option value="Kotlin File" />
+        <option value="UML Class" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -101,9 +114,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "DefaultPlantUmlFileTemplate": "UML Sequence",
+    "DefaultPlantUmlFileTemplate": "UML Class",
     "Gradle.AppIntegrationTest (1).executor": "Run",
+    "Gradle.AppIntegrationTest.agents can provide their attitude towards nodes.executor": "Run",
     "Gradle.AppIntegrationTest.executor": "Run",
+    "Gradle.AppIntegrationTest.queries with invalid credentials should fail.executor": "Run",
     "Gradle.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately.executor": "Run",
     "Gradle.Build debate.executor": "Run",
     "Gradle.DefaultReactiveUserDetailsServiceTest.executor": "Debug",
@@ -167,6 +182,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "last_directory_selection": "/Users/merlijn/Library/Mobile Documents/com~apple~CloudDocs/projects/civic-tech-pioneer/debate/src/main/kotlin/civictech/deliberate/domain",
     "last_opened_file_path": "/Users/merlijn/Library/Mobile Documents/com~apple~CloudDocs/projects/civic-tech-pioneer/debate/src/main/resources/static/auth",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -198,37 +214,38 @@
       <recent name="$PROJECT_DIR$/src/main/resources" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/kotlin/civictech/dgs/types" />
       <recent name="$PROJECT_DIR$/src/main/resources/static" />
       <recent name="$PROJECT_DIR$/src/main/resources/templates/auth" />
       <recent name="$PROJECT_DIR$/doc" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
-      <recent name="civictech.auth" />
-      <recent name="civictech.config" />
-      <recent name="civictech.deliberate.repository" />
+      <recent name="civictech.domain" />
       <recent name="civictech.deliberate.repository.dto" />
+      <recent name="civictech.deliberate.repository" />
       <recent name="civictech.deliberate.service" />
+      <recent name="civictech.auth" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="civictech.deliberate.domain" />
+      <recent name="civictech.deliberate.repository.convert" />
       <recent name="civictech.auth" />
       <recent name="civictech.deliberate.view" />
-      <recent name="civictech.deliberate.domain" />
       <recent name="civictech.deliberate" />
-      <recent name="civictech.metagraph.view" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="civictech.auth" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="civictech.deliberate.domain" />
+      <recent name="civictech.deliberate.repository" />
       <recent name="civictech.deliberate.graphql.dataloaders" />
       <recent name="civictech.config" />
       <recent name="civictech.deliberate.def" />
-      <recent name="civictech.metagraph" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="civictech.deliberate.graphql.scalars" />
@@ -240,7 +257,7 @@
     </option>
   </component>
   <component name="RunManager" selected="Gradle.Tests in 'debate.test'">
-    <configuration name="AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="AppIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -253,7 +270,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;civictech.app.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately&quot;" />
+            <option value="&quot;civictech.app.AppIntegrationTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -264,7 +281,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="Tests in 'civictech.app'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="AppIntegrationTest.agents can provide their attitude towards nodes" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -277,7 +294,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;civictech.app.*&quot;" />
+            <option value="&quot;civictech.app.AppIntegrationTest.agents can provide their attitude towards nodes&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -364,8 +381,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately" />
-      <item itemvalue="Gradle.Tests in 'civictech.app'" />
+      <item itemvalue="Gradle.AppIntegrationTest" />
+      <item itemvalue="Gradle.AppIntegrationTest.agents can provide their attitude towards nodes" />
       <item itemvalue="Gradle.debate [clean]" />
       <item itemvalue="Gradle.debate [generateJava]" />
       <item itemvalue="Gradle.Tests in 'debate.test'" />
@@ -374,10 +391,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tests in 'debate.test'" />
-        <item itemvalue="Gradle.AppIntegrationTest.when linking two nodes, the nodes should have their source and target set appropriately" />
-        <item itemvalue="Gradle.debate [generateJava]" />
+        <item itemvalue="Gradle.AppIntegrationTest.agents can provide their attitude towards nodes" />
+        <item itemvalue="Gradle.AppIntegrationTest" />
         <item itemvalue="Gradle.debate [clean]" />
-        <item itemvalue="Gradle.Tests in 'civictech.app'" />
+        <item itemvalue="Gradle.debate [generateJava]" />
       </list>
     </recent_temporary>
   </component>
@@ -408,23 +425,46 @@
       <workItem from="1733067426371" duration="57587000" />
       <workItem from="1734424435331" duration="60142000" />
     </task>
+    <task id="LOCAL-00001" summary="Implement registering attitudes&#10;Changed registration to no longer return a token&#10;Replace User.id identifier with User.name">
+      <option name="closed" value="true" />
+      <created>1736840003442</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736840003442</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implement registering attitudes&#10;Changed registration to no longer return a token&#10;Replace User.id identifier with User.name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement registering attitudes&#10;Changed registration to no longer return a token&#10;Replace User.id identifier with User.name" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.netflix.graphql.dgs/graphql-dgs/9.1.3/26be969f4d1aa6ee15864139f08110dc4184aaf3/graphql-dgs-9.1.3-sources.jar!/main/com/netflix/graphql/dgs/internal/DgsSchemaProvider.kt</url>
-          <line>771</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-core/6.3.4/ea19cb7371d2ccd4727429d44606fa0548586404/spring-security-core-6.3.4-sources.jar!/org/springframework/security/authorization/method/AuthorizationManagerBeforeMethodInterceptor.java</url>
           <line>294</line>
           <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AttitudeDataFetcher.kt</url>
+          <line>30</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt</url>
+          <line>22</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt</url>
+          <line>14</line>
+          <option name="timeStamp" value="116" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

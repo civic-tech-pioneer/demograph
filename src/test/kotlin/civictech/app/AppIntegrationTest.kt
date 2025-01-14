@@ -1,22 +1,39 @@
 package civictech.app
 
+import civictech.auth.TokenProvider
+import civictech.auth.UserService
+import civictech.deliberate.domain.Degree
+import civictech.deliberate.graphql.datafetchers.AttitudeDataFetcher.Companion.toDomain
 import civictech.dgs.DgsClient.buildMutation
 import civictech.dgs.DgsClient.buildQuery
-import civictech.dgs.types.Link
-import civictech.dgs.types.MarkdownNode
+import civictech.dgs.types.*
 import civictech.test.Codec
 import civictech.test.DgsGraphQlClientTestConfig
 import civictech.test.PostgresIntegrationTestConfiguration
 import com.netflix.graphql.dgs.client.GraphQLClient
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.engine.runBlocking
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
+import org.mockito.ArgumentCaptor
+import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.bean.override.mockito.MockitoBean
+import org.springframework.web.client.HttpClientErrorException
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.*
+import java.util.function.Consumer
+import civictech.deliberate.domain.Histogram as HistogramModel
+import civictech.deliberate.domain.Bucket as BucketModel
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(
@@ -26,9 +43,29 @@ import java.util.*
     ],
 )
 @Testcontainers
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class AppIntegrationTest {
+    @MockitoBean
+    private lateinit var httpHeadersConsumer: Consumer<HttpHeaders>
+
     @Autowired
     private lateinit var dgsGraphQLClient: GraphQLClient
+
+    @Autowired
+    private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var tokenProvider: TokenProvider
+
+    private lateinit var token: String
+
+    @BeforeAll
+    fun setup() {
+        runBlocking {
+            userService.registerUser("user", "password")
+        }
+        token = tokenProvider.generate("user", listOf("USER"))
+    }
 
     @Test
     fun `when creating a markdown node, then it should be retrievable`() {
@@ -135,6 +172,55 @@ class AppIntegrationTest {
         linkedExpression.sourceLinks shouldBe emptyList()
     }
 
+    @Test
+    fun `graphql queries with invalid credentials should not be authorized`() {
+        modifyHeaders { it.setBearerAuth("I'm not a valid token") }
+
+        val error = shouldThrow<HttpClientErrorException> { withMarkdownNode("This text is irrelevant") }
+
+        error.statusCode shouldBe HttpStatus.UNAUTHORIZED
+    }
+
+    @Test
+    fun `agents can provide their attitude towards nodes`() {
+        modifyHeaders { it.setBearerAuth(token) }
+
+        val markdownNodeRef: UUID = withMarkdownNode("I'm a highly controversial statement")
+
+        val histogram = HistogramInput(listOf(BucketInput(1.0, 1.0)))
+        val createAttitude = buildMutation(Codec) {
+            setAttitudeHistogram(markdownNodeRef, histogram) {
+                agent {
+                    userName
+                }
+                contestableId
+                histogram {
+                    buckets {
+                        center
+                        value
+                    }
+                }
+            }
+        }
+
+        val result = dgsGraphQLClient
+            .executeQuery(createAttitude)
+            .extractValueAsObject("setAttitudeHistogram", Attitude::class.java)
+
+        result shouldNotBe null
+        result.agent.userName shouldBe "user"
+        result.contestableId shouldBe markdownNodeRef
+
+        result.histogram?.toDomain() shouldBe histogram.toDomain()
+    }
+
+    private fun modifyHeaders(consumer: Consumer<HttpHeaders>) {
+        val argumentCaptor = ArgumentCaptor.forClass(HttpHeaders::class.java)
+        `when`(httpHeadersConsumer.accept(argumentCaptor.capture())).then {
+            consumer.accept(argumentCaptor.value)
+        }
+    }
+
     private fun withMarkdownNode(text: String): UUID {
         val addMarkdown: String = buildMutation(Codec) {
             addMarkdownNode(text) {
@@ -161,7 +247,18 @@ class AppIntegrationTest {
                     sourceRef
                     targetRef
                 }
+                owner {
+                    userName
+                }
             }
         })
         .extractValueAsObject("markdownNode", MarkdownNode::class.java)
+
+    private fun Histogram.toDomain(): HistogramModel =
+        HistogramModel(buckets = this.buckets.map { it.toDomain() })
+
+    private fun Bucket.toDomain(): BucketModel = BucketModel(
+        Degree.of(this.center),
+        Degree.of(this.value)
+    )
 }

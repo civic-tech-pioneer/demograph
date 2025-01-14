@@ -1,5 +1,5 @@
 package civictech.auth
 
 interface JwtTokenProvider {
-    fun generate(username: String, roles: List<String>): String
+    fun generate(userName: String, roles: List<String>): String
 }

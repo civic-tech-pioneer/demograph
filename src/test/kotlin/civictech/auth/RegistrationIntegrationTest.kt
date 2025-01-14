@@ -9,7 +9,6 @@ import io.kotest.matchers.collections.containOnly
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.string.contain
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -73,12 +72,6 @@ class RegistrationIntegrationTest {
             .returnResult<String>()
 
         result.status shouldBe HttpStatus.CREATED
-
-        val response = result.responseBody.blockLast()
-        println("Registration Response: $response")
-
-        // Assert the response contains a token
-        response should contain("token")
 
         // Verify user is saved in MongoDB
         val savedUser = userRepository.findByName("testuser")

@@ -32,7 +32,6 @@ class DefaultReactiveUserDetailsServiceTest {
     fun userCanBeRetrieved() = runTest {
         userRepository.save(
             UserDocument(
-                version = null,
                 name = "username",
                 password = "password",
                 roles = listOf("USER")

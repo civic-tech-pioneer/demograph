@@ -5,6 +5,8 @@ type Query {
     markdownNode(id: UUID!): MarkdownNode
     link(id: UUID!): Link
     links(id: UUID!): Links
+
+    attitude(id: UUID!): Attitude
 }
 
 type Mutation {
@@ -16,6 +18,8 @@ type Mutation {
 
     addLink(from: UUID!, to: UUID!): Link
     removeLink(id: UUID!): Result
+
+    setAttitudeHistogram(on: UUID!, histogram: HistogramInput!): Attitude
 }
 
 type Subscription {
@@ -28,20 +32,46 @@ enum Result {
 }
 
 type Agent {
-    id: UUID!
-    displayName: String
+    userName: String
+}
+
+type Attitude {
+    agent: Agent!
+    contestableId: UUID!
+    histogram: Histogram
+}
+
+type Bucket {
+    center: Float!
+    value: Float!
+}
+
+type Histogram {
+    buckets: [Bucket!]!
+    #    bucketSize: Float
+}
+
+input BucketInput {
+    center: Float!
+    value: Float!
+}
+
+input HistogramInput {
+    buckets: [BucketInput!]!
 }
 
 interface Contestable {
     id: UUID!
     sourceLinks: [Link!]
     targetLinks: [Link!]
+    owner: Agent
 }
 
 interface Node implements Contestable {
     id: UUID!
     sourceLinks: [Link!]!
     targetLinks: [Link!]!
+    owner: Agent
 }
 
 type MarkdownNode implements Contestable & Node {
@@ -49,6 +79,7 @@ type MarkdownNode implements Contestable & Node {
     text: String!
     sourceLinks: [Link!]!
     targetLinks: [Link!]!
+    owner: Agent
 }
 
 type Link implements Contestable {
@@ -57,6 +88,7 @@ type Link implements Contestable {
     targetRef: UUID!
     sourceLinks: [Link!]!
     targetLinks: [Link!]!
+    owner: Agent
 }
 
 type Links {

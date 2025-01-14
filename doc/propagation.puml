@@ -1,0 +1,68 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+'Prioritization Metrics - Lexicographic ordering
+' 1. Stale predecessor count
+' 2. Aggregate Ranking
+'    - Queue length
+'    - Stale time (class)
+'    - Change magnitude
+
+class ContestableUpdatePlanner {
+    staleContestables: Map<UUID, StaleContestable>
+    strategy: ContestableUpdater
+    --
+    next(): StaleContestable?
+    hasNext(): boolean
+    onContestableUpdate(contestableId: UUID, change: ContestableChange)
+}
+
+interface ContestableUpdater {
+    --
+    update(contestableId: UUID, changes: ContestableChange[])
+}
+
+class StaleContestable {
+    contestableId: UUID
+    ContestableChange[] changeLog
+    --
+    ' average(changeLog.map(_.delta())
+    changeMagnitude(): float
+    ' changeLog[0].time
+    staleTime(): Time
+    ' changeLog.length
+    queueLength(): int
+}
+
+class ContestableChange {
+    time: Time
+    sourceId: UUID
+    sourceType: SourceType
+    ' at least one of { old, new } should be non-null, depending on `changeType`.
+    changeType: ChangeType
+    old: Histogram?
+    new: Histogram?
+    --
+    delta(): float
+}
+
+enum SourceType {
+    Attitude
+    Link
+    Element
+}
+
+enum ChangeType {
+    Addition
+    Removal
+    Update
+}
+
+StaleContestable -> ContestableChange : uses
+ContestableChange --> SourceType : uses
+ContestableChange -> ChangeType : uses
+ContestableUpdatePlanner --> StaleContestable : uses
+ContestableUpdatePlanner --> ContestableUpdater : uses
+
+@enduml

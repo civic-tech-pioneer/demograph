@@ -39,10 +39,10 @@ class AuthController(
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    suspend fun registerBody(@RequestBody(required = false) @Valid bodyRequest: RegisterRequest): ResponseEntity<Map<String, String>> =
-        ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(mapOf("token" to userService.registerUser(bodyRequest.username, bodyRequest.password)))
+    suspend fun registerBody(@RequestBody @Valid bodyRequest: RegisterRequest): ResponseEntity<Void> {
+        userService.registerUser(bodyRequest.username, bodyRequest.password)
+        return ResponseEntity.status(HttpStatus.CREATED).build()
+    }
 
 
     @GetMapping
@@ -70,4 +70,5 @@ class AuthController(
         }
     }
 }
+
 
