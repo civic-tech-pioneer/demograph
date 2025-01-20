@@ -1,7 +1,7 @@
 package civictech.deliberate.graphql.datafetchers
 
 import civictech.deliberate.domain.Bucket
-import civictech.deliberate.domain.Degree
+import civictech.deliberate.domain.Degree.Companion.toDegree
 import civictech.deliberate.service.AttitudeService
 import civictech.deliberate.domain.Histogram
 import civictech.dgs.types.Agent
@@ -32,8 +32,11 @@ class AttitudeDataFetcher(
     }
 
     companion object {
-        fun HistogramInput.toDomain(): Histogram = Histogram(this.buckets.map { it.toDomain() })
-        fun BucketInput.toDomain(): Bucket = Bucket(Degree.of(this.center), Degree.of(this.value))
+        fun HistogramInput.toDomain(): Histogram = Histogram(this.buckets.mapIndexed{ i: Int, bi: BucketInput ->
+            bi.toDomain(this.buckets.size, i)
+        })
+        fun BucketInput.toDomain(count: Int, i: Int): Bucket = Bucket.of(count, i, this.value.toDegree())
+
         fun civictech.deliberate.domain.Attitude.toApi(): Attitude = Attitude(
             { Agent { this.agentName } },
             { this.target },
@@ -45,7 +48,7 @@ class AttitudeDataFetcher(
         })
 
         fun Bucket.toApi() =
-            BucketOutput({ this.center.value.toDouble() }, { this.fraction.value.toDouble() })
+            BucketOutput({ this.value.value })
     }
 }
 

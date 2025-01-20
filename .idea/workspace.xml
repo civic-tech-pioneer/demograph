@@ -5,16 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9579cdd-be13-4a87-aedd-fc1e52ae6140" name="Changes" comment="Implement registering attitudes&#10;Changed registration to no longer return a token&#10;Replace User.id identifier with User.name">
-      <change afterPath="$PROJECT_DIR$/doc/propagation.puml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Attitude.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Bucket.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/ChangeType.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/ContestableChange.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/ContestableUpdater.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/domain/SourceType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/HistogramDef.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/deliberate/AttitudeAveragerTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/deliberate/domain/HistogramDefTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/deliberate/domain/HistogramTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Bucket.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Bucket.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Degree.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Degree.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Histogram.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/domain/Histogram.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AttitudeDataFetcher.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/graphql/datafetchers/AttitudeDataFetcher.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/repository/convert/DegreeReadingConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/repository/convert/DegreeReadingConverter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/repository/convert/DegreeWritingConverter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/repository/convert/DegreeWritingConverter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/repository/dto/AttitudeDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/repository/dto/AttitudeDto.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/schema/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/schema/schema.graphql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/civictech/app/AppIntegrationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/civictech/app/AppIntegrationTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,17 +89,22 @@
         <option value="Kotlin Object" />
         <option value="Kotlin Interface" />
         <option value="Kotlin Annotation" />
-        <option value="JUnit5 Test Class" />
         <option value="package.json" />
         <option value="Class" />
         <option value="Kotlin File" />
         <option value="UML Class" />
+        <option value="JUnit5 Test Class" />
         <option value="Kotlin Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsbtTreeLayoutManager">
+    <layout place="tools.popupGrunt">
+      <scroll-view-position x="0" y="0" />
+    </layout>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -123,6 +133,8 @@
     "Gradle.Build debate.executor": "Run",
     "Gradle.DefaultReactiveUserDetailsServiceTest.executor": "Debug",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.HistogramTest.executor": "Debug",
+    "Gradle.HistogramTest.it should generate histograms based on expected value and confidence.executor": "Debug",
     "Gradle.LinkRepositoryTest.LinkRepository should retrieve links by sourceRefs.executor": "Run",
     "Gradle.MetaGraphTest.executor": "Run",
     "Gradle.MongoDbTest.executor": "Run",
@@ -232,12 +244,13 @@
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="civictech.deliberate.domain" />
+      <recent name="civictech.deliberate" />
       <recent name="civictech.deliberate.repository.convert" />
       <recent name="civictech.auth" />
       <recent name="civictech.deliberate.view" />
-      <recent name="civictech.deliberate" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="civictech.deliberate.domain" />
       <recent name="civictech.auth" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
@@ -256,7 +269,7 @@
       <command value="gradle generateJava" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.Tests in 'debate.test'">
+  <component name="RunManager" selected="Gradle.HistogramTest">
     <configuration name="AppIntegrationTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -305,6 +318,54 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="HistogramTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;civictech.deliberate.domain.HistogramTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="HistogramTest.it should generate histograms based on expected value and confidence" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;civictech.domain.HistogramTest.it should generate histograms based on expected value and confidence&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="Tests in 'debate.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -327,50 +388,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="debate [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="debate [generateJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="generateJava" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="Main" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="dev,clickops" />
       <module name="debate.main" />
@@ -383,18 +400,18 @@
     <list>
       <item itemvalue="Gradle.AppIntegrationTest" />
       <item itemvalue="Gradle.AppIntegrationTest.agents can provide their attitude towards nodes" />
-      <item itemvalue="Gradle.debate [clean]" />
-      <item itemvalue="Gradle.debate [generateJava]" />
+      <item itemvalue="Gradle.HistogramTest" />
+      <item itemvalue="Gradle.HistogramTest.it should generate histograms based on expected value and confidence" />
       <item itemvalue="Gradle.Tests in 'debate.test'" />
       <item itemvalue="Spring Boot.Main" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.HistogramTest" />
         <item itemvalue="Gradle.Tests in 'debate.test'" />
+        <item itemvalue="Gradle.HistogramTest.it should generate histograms based on expected value and confidence" />
         <item itemvalue="Gradle.AppIntegrationTest.agents can provide their attitude towards nodes" />
         <item itemvalue="Gradle.AppIntegrationTest" />
-        <item itemvalue="Gradle.debate [clean]" />
-        <item itemvalue="Gradle.debate [generateJava]" />
       </list>
     </recent_temporary>
   </component>
@@ -465,6 +482,11 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/civictech/deliberate/service/AttitudeService.kt</url>
           <line>14</line>
           <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/test/kotlin/civictech/deliberate/domain/HistogramTest.kt</url>
+          <line>13</line>
+          <option name="timeStamp" value="120" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

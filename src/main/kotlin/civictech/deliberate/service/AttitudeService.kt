@@ -16,7 +16,7 @@ class AttitudeService(
             AttitudeDto(
                 ownerName = userName,
                 contestableId = contestableId,
-                histogramCenters = histogram.centers,
+//                histogramCenters = histogram.centers,
                 histogramFractions = histogram.fractions
             )
         )

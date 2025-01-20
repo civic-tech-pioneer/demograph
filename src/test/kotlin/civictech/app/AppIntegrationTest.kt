@@ -2,7 +2,7 @@ package civictech.app
 
 import civictech.auth.TokenProvider
 import civictech.auth.UserService
-import civictech.deliberate.domain.Degree
+import civictech.deliberate.domain.Degree.Companion.toDegree
 import civictech.deliberate.graphql.datafetchers.AttitudeDataFetcher.Companion.toDomain
 import civictech.dgs.DgsClient.buildMutation
 import civictech.dgs.DgsClient.buildQuery
@@ -32,8 +32,8 @@ import org.springframework.web.client.HttpClientErrorException
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.*
 import java.util.function.Consumer
-import civictech.deliberate.domain.Histogram as HistogramModel
 import civictech.deliberate.domain.Bucket as BucketModel
+import civictech.deliberate.domain.Histogram as HistogramModel
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(
@@ -187,7 +187,7 @@ class AppIntegrationTest {
 
         val markdownNodeRef: UUID = withMarkdownNode("I'm a highly controversial statement")
 
-        val histogram = HistogramInput(listOf(BucketInput(1.0, 1.0)))
+        val histogram = HistogramInput(listOf(BucketInput(1.0)))
         val createAttitude = buildMutation(Codec) {
             setAttitudeHistogram(markdownNodeRef, histogram) {
                 agent {
@@ -196,7 +196,6 @@ class AppIntegrationTest {
                 contestableId
                 histogram {
                     buckets {
-                        center
                         value
                     }
                 }
@@ -255,10 +254,8 @@ class AppIntegrationTest {
         .extractValueAsObject("markdownNode", MarkdownNode::class.java)
 
     private fun Histogram.toDomain(): HistogramModel =
-        HistogramModel(buckets = this.buckets.map { it.toDomain() })
+        HistogramModel(buckets = this.buckets.mapIndexed { i, bi -> bi.toDomain(this.buckets.size, i) })
 
-    private fun Bucket.toDomain(): BucketModel = BucketModel(
-        Degree.of(this.center),
-        Degree.of(this.value)
-    )
+    private fun Bucket.toDomain(bucketCount: Int, i: Int): BucketModel =
+        BucketModel.of(bucketCount, i, value.toDegree())
 }

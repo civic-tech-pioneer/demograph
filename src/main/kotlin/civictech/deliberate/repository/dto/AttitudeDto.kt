@@ -12,6 +12,6 @@ data class AttitudeDto(
     @Version val version: Int? = null,
     val ownerName: String,
     val contestableId: UUID,
-    val histogramCenters: List<Degree>,
+//    val histogramCenters: List<Degree>,
     val histogramFractions: List<Degree>
 )

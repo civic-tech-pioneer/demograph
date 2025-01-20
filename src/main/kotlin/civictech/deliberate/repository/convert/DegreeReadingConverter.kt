@@ -5,6 +5,6 @@ import org.springframework.core.convert.converter.Converter
 import org.springframework.data.convert.ReadingConverter
 
 @ReadingConverter
-class DegreeReadingConverter : Converter<Float, Degree> {
-    override fun convert(source: Float): Degree? = Degree.orNull(source)
+class DegreeReadingConverter : Converter<Double, Degree> {
+    override fun convert(source: Double): Degree? = Degree.orNull(source)
 }

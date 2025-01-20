@@ -42,7 +42,7 @@ type Attitude {
 }
 
 type Bucket {
-    center: Float!
+#    center: Float!
     value: Float!
 }
 
@@ -52,7 +52,7 @@ type Histogram {
 }
 
 input BucketInput {
-    center: Float!
+#    center: Float!
     value: Float!
 }
 
