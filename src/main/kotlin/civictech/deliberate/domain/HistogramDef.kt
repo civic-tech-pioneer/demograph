@@ -9,6 +9,9 @@ import kotlin.math.min
 
 data class HistogramDef private constructor(val bucketDefs: List<BucketDef>) {
 
+    fun populate(getDegree: (BucketDef) -> Degree): Histogram =
+        SimpleHistogram.of(this, bucketDefs.map(getDegree))
+
     fun distribution(expected: Degree, confidence: Confidence, epsilon: Double = 1e-12): Histogram {
         // clamp c to (0,1) so we never get infinite alpha/beta
         val c = max(epsilon, min(1.0 - epsilon, confidence.scaled()))
@@ -20,15 +23,9 @@ data class HistogramDef private constructor(val bucketDefs: List<BucketDef>) {
         val dist = BetaDistribution.of(alpha, beta)
 
         // Calculate buckets
-        val buckets = bucketDefs.map { bDef ->
-            Bucket(
-                bDef.left, bDef.right, Degree.of(
-                    dist.cumulativeProbability(bDef.right.value) - dist.cumulativeProbability(bDef.left.value)
-                )
-            )
-        }
-
-        return Histogram(buckets)
+        return populate { bDef -> Degree.of(
+            dist.cumulativeProbability(bDef.right.value) - dist.cumulativeProbability(bDef.left.value)
+        )}
     }
 
     companion object {

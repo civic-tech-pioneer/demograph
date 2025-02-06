@@ -11,7 +11,9 @@ value class Degree internal constructor(val value: Double) : Comparable<Degree> 
     fun max(other: Degree): Degree = Degree(kotlin.math.max(value, other.value))
     fun avg(other: Degree): Degree = Degree((value + other.value) / 2)
     operator fun times(other: Degree): Degree = Degree(value * other.value)
+    operator fun div(other: Degree): Degree = Degree(value / other.value)
     operator fun plus(other: Degree): Degree = clamp(value + other.value)
+    operator fun minus(other: Degree): Degree = clamp(value - other.value)
 
     override fun toString(): String = "${(value * 100).roundToInt()}%"
 
