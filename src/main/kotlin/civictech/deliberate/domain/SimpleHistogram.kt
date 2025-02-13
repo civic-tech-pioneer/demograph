@@ -1,15 +1,16 @@
 package civictech.deliberate.domain
 
 import civictech.deliberate.domain.Degree.Companion.ZERO
+import civictech.deliberate.domain.Degree.Companion.average
 
-data class SimpleHistogram private constructor(val histogramDef: HistogramDef, val bucketValues: List<Degree>) :
+data class SimpleHistogram private constructor(override val def: HistogramDef, val bucketValues: List<Degree>) :
     Histogram {
 
     private fun slice(left: Degree, right: Degree): List<Bucket> =
         buckets.dropWhile { it.right < left }.takeWhile { it.left < right }
 
     override fun rebin(histogramDef: HistogramDef): Histogram =
-        histogramDef.populate { ratio(it.left, it.right) }
+        if (this.def == histogramDef) this else histogramDef.populate { ratio(it.left, it.right) }
 
     private fun ratio(left: Degree, right: Degree): Degree {
         fun bucketOverlap(bucketLeft: Degree, bucketRight: Degree): Degree {
@@ -23,7 +24,7 @@ data class SimpleHistogram private constructor(val histogramDef: HistogramDef, v
     }
 
     override val buckets: List<Bucket> by lazy {
-        histogramDef.bucketDefs.zip(bucketValues.toList()).map {
+        def.bucketDefs.zip(bucketValues.toList()).map {
             Bucket(it.first.left, it.first.right, it.second)
         }
     }
@@ -50,7 +51,11 @@ data class SimpleHistogram private constructor(val histogramDef: HistogramDef, v
 //            if (histograms.isEmpty()) null else arithmeticMean(histograms.head())
 
         fun arithmeticMean(first: Histogram, vararg others: Histogram): Histogram {
-            return first // TODO
+            val rebinned = others.map { it.rebin(first.def) } + first
+            val values = first.def.bucketDefs.mapIndexed { index, bucketDef ->
+                rebinned.map { it.buckets[index].value }.average()
+            }
+            return of(first.def, values)
         }
     }
 }

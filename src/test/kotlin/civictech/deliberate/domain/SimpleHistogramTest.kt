@@ -2,6 +2,7 @@ package civictech.deliberate.domain
 
 import civictech.deliberate.domain.Confidence.Companion.toConfidence
 import civictech.deliberate.domain.Degree.Companion.ONE
+import civictech.deliberate.domain.Degree.Companion.ZERO
 import civictech.deliberate.domain.Degree.Companion.toDegree
 import io.kotest.matchers.collections.shouldBeSortedWith
 import io.kotest.matchers.collections.shouldHaveSize
@@ -81,7 +82,32 @@ class SimpleHistogramTest {
     }
 
     @Test
-    fun `histograms support arithmetic average`() {
+    fun `arithmetic average of equivalent histograms is the same histogram`() {
+        val normalDistribution = HistogramDef.DEFAULT.distribution(0.5.toDegree(), 0.5.toConfidence())
+        val meanDistribution = SimpleHistogram.arithmeticMean(normalDistribution, normalDistribution, normalDistribution)
 
+        meanDistribution.def shouldBe normalDistribution.def
+        meanDistribution.buckets.zip(normalDistribution.buckets).forEach { (b1, b2) ->
+            b1.value.value shouldBe (b2.value.value plusOrMinus 0.0000001)
+        }
+    }
+
+    @Test
+    fun `arithmetic mean of two same-binned histograms should be the point-wise average`() {
+        val d1 = HistogramDef.DEFAULT.distribution((3.0 / 18).toDegree(), Confidence.FULL)
+        val d2 = HistogramDef.DEFAULT.distribution((15.0 / 18).toDegree(), Confidence.FULL)
+
+        val meanDistribution = SimpleHistogram.arithmeticMean(d1, d2)
+        meanDistribution shouldBe SimpleHistogram.of(HistogramDef.DEFAULT, listOf(
+            ZERO,
+            0.5.toDegree(),
+            ZERO,
+            ZERO,
+            ZERO,
+            ZERO,
+            ZERO,
+            0.5.toDegree(),
+            ZERO
+        ))
     }
 }

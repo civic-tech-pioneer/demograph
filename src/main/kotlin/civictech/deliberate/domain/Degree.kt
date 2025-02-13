@@ -15,7 +15,11 @@ value class Degree internal constructor(val value: Double) : Comparable<Degree> 
     operator fun plus(other: Degree): Degree = clamp(value + other.value)
     operator fun minus(other: Degree): Degree = clamp(value - other.value)
 
-    override fun toString(): String = "${(value * 100).roundToInt()}%"
+    override fun toString(): String {
+        val rounded = (value * 100).roundToInt()
+        val prefix = if (rounded.toDouble() != value * 100) "~" else ""
+        return "$prefix$rounded%"
+    }
 
     override fun compareTo(other: Degree): Int = value.compareTo(other.value)
 
@@ -38,15 +42,9 @@ value class Degree internal constructor(val value: Double) : Comparable<Degree> 
             else -> Degree(value)
         }
 
-        fun average(degrees: Iterable<Degree>): Degree {
-            var count = 0
-            var total = 0.0
-            for (degree in degrees) {
-                count++
-                total += degree.value
-            }
-            return if (count == 0) ZERO else Degree(total / count)
-        }
+        @JvmName("averageOfDegree")
+        fun Iterable<Degree>.average(): Degree =
+            of(map(Degree::value).average())
 
         fun Double.toDegree(): Degree = of(this)
     }
