@@ -48,7 +48,7 @@ tasks.generateJava {
 }
 
 val coroutinesVersion = "1.10.1"
-val koTestVersion = "6.0.0.M1"
+val koTestVersion = "6.0.0.M2"
 
 dependencyManagement {
     imports {
