@@ -52,7 +52,7 @@ val koTestVersion = "6.0.0.M1"
 
 dependencyManagement {
     imports {
-        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:10.0.3")
+        mavenBom("com.netflix.graphql.dgs:graphql-dgs-platform-dependencies:10.0.4")
     }
 }
 
