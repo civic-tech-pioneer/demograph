@@ -47,12 +47,12 @@ data class SimpleHistogram private constructor(override val def: HistogramDef, v
         fun of(histogramDef: HistogramDef, bucketValues: List<Degree>): SimpleHistogram =
             SimpleHistogram(histogramDef, bucketValues)
 
-//        fun arithmeticMean(histograms: Collection<Histogram>): Histogram? =
-//            if (histograms.isEmpty()) null else arithmeticMean(histograms.head())
+        fun arithmeticMean(histograms: Collection<Histogram>): Histogram? =
+            if (histograms.isEmpty()) null else arithmeticMean(histograms.first(), *histograms.drop(1).toTypedArray())
 
         fun arithmeticMean(first: Histogram, vararg others: Histogram): Histogram {
             val rebinned = others.map { it.rebin(first.def) } + first
-            val values = first.def.bucketDefs.mapIndexed { index, bucketDef ->
+            val values = List(first.def.bucketDefs.size) { index ->
                 rebinned.map { it.buckets[index].value }.average()
             }
             return of(first.def, values)

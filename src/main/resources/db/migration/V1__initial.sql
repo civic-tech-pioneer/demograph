@@ -34,8 +34,8 @@ CREATE TABLE attitudes
     version             int,
     owner_name          text,
     contestable_id      UUID,
-    histogram_centers   real[],
-    histogram_fractions real[]
+    histogram_centers   double precision[],
+    histogram_fractions double precision[]
 );
 
 CREATE INDEX attitude_contestable_idx ON attitudes (contestable_id);

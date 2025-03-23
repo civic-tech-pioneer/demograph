@@ -9,4 +9,6 @@ data class ContestableId(override val id: UUID): Contestable {
         get() = emptyList()
     override val owner: Agent?
         get() = null
+    override val averageAttitude: Histogram?
+        get() = null
 }

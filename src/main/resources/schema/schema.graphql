@@ -65,6 +65,7 @@ interface Contestable {
     sourceLinks: [Link!]
     targetLinks: [Link!]
     owner: Agent
+    averageAttitude: Histogram
 }
 
 interface Node implements Contestable {
@@ -72,6 +73,7 @@ interface Node implements Contestable {
     sourceLinks: [Link!]!
     targetLinks: [Link!]!
     owner: Agent
+    averageAttitude: Histogram
 }
 
 type MarkdownNode implements Contestable & Node {
@@ -80,6 +82,7 @@ type MarkdownNode implements Contestable & Node {
     sourceLinks: [Link!]!
     targetLinks: [Link!]!
     owner: Agent
+    averageAttitude: Histogram
 }
 
 type Link implements Contestable {
@@ -89,6 +92,7 @@ type Link implements Contestable {
     sourceLinks: [Link!]!
     targetLinks: [Link!]!
     owner: Agent
+    averageAttitude: Histogram
 }
 
 type Links {

@@ -9,8 +9,13 @@ import kotlin.math.min
 
 data class HistogramDef private constructor(val bucketDefs: List<BucketDef>) {
 
+    fun bucketCount(): Int = bucketDefs.size
+
     fun populate(getDegree: (BucketDef) -> Degree): Histogram =
         SimpleHistogram.of(this, bucketDefs.map(getDegree))
+
+    fun populateIndexed(getDegree: (Int) -> Degree): Histogram =
+        SimpleHistogram.of(this, bucketDefs.indices.map(getDegree))
 
     fun distribution(expected: Degree, confidence: Confidence, epsilon: Double = 1e-12): Histogram {
         // clamp c to (0,1) so we never get infinite alpha/beta
@@ -29,8 +34,10 @@ data class HistogramDef private constructor(val bucketDefs: List<BucketDef>) {
     }
 
     companion object {
+        const val DEFAULT_BUCKET_COUNT: Int = 9
+
         @JvmStatic
-        val DEFAULT: HistogramDef = of(bucketCount = 9)
+        val DEFAULT: HistogramDef = of_(bucketCount = 9)
 
         @JvmStatic
         val EDGES: HistogramDef = ofBoundaries(
@@ -39,9 +46,12 @@ data class HistogramDef private constructor(val bucketDefs: List<BucketDef>) {
                 .toSortedSet(Comparator.comparing { it.value })
         )
 
-        fun of(bucketCount: Int): HistogramDef = HistogramDef((1..bucketCount).map {
+        private fun of_(bucketCount: Int): HistogramDef = HistogramDef((1..bucketCount).map {
             BucketDef(Degree.of((it - 1) / bucketCount.toDouble()), Degree.of(it / bucketCount.toDouble()))
         })
+
+        fun of(bucketCount: Int = DEFAULT_BUCKET_COUNT): HistogramDef =
+            if (bucketCount == DEFAULT_BUCKET_COUNT) DEFAULT else of_(bucketCount)
 
         fun ofBoundaries(boundaries: SortedSet<Degree>): HistogramDef {
             val allBoundaries: SortedSet<Degree> = (boundaries + ZERO + ONE)

@@ -10,6 +10,7 @@ value class Degree internal constructor(val value: Double) : Comparable<Degree> 
     fun min(other: Degree): Degree = Degree(kotlin.math.min(value, other.value))
     fun max(other: Degree): Degree = Degree(kotlin.math.max(value, other.value))
     fun avg(other: Degree): Degree = Degree((value + other.value) / 2)
+    fun absDiff(other: Degree): Degree = Degree(kotlin.math.abs(value - other.value))
     operator fun times(other: Degree): Degree = Degree(value * other.value)
     operator fun div(other: Degree): Degree = Degree(value / other.value)
     operator fun plus(other: Degree): Degree = clamp(value + other.value)
@@ -46,6 +47,7 @@ value class Degree internal constructor(val value: Double) : Comparable<Degree> 
         fun Iterable<Degree>.average(): Degree =
             of(map(Degree::value).average())
 
+        fun Int.toDegree(): Degree = of(this.toDouble())
         fun Double.toDegree(): Degree = of(this)
     }
 }

@@ -2,11 +2,20 @@ package civictech.app
 
 import civictech.auth.TokenProvider
 import civictech.auth.UserService
+import civictech.deliberate.domain.*
+import civictech.deliberate.domain.Degree.Companion.ONE
+import civictech.deliberate.domain.Degree.Companion.ZERO
 import civictech.deliberate.domain.Degree.Companion.toDegree
+import civictech.deliberate.domain.Histogram.Companion.approxEquals
 import civictech.deliberate.graphql.datafetchers.AttitudeDataFetcher.Companion.toDomain
+import civictech.deliberate.repository.convert.ConversionConfig
 import civictech.dgs.DgsClient.buildMutation
 import civictech.dgs.DgsClient.buildQuery
-import civictech.dgs.types.*
+import civictech.dgs.types.Attitude
+import civictech.dgs.types.BucketInput
+import civictech.dgs.types.HistogramInput
+import civictech.dgs.types.Link
+import civictech.dgs.types.MarkdownNode
 import civictech.test.Codec
 import civictech.test.DgsGraphQlClientTestConfig
 import civictech.test.PostgresIntegrationTestConfiguration
@@ -17,10 +26,16 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.mockito.ArgumentCaptor
+import org.mockito.Mockito.reset
 import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -32,8 +47,8 @@ import org.springframework.web.client.HttpClientErrorException
 import org.testcontainers.junit.jupiter.Testcontainers
 import java.util.*
 import java.util.function.Consumer
-import civictech.deliberate.domain.Bucket as BucketModel
-import civictech.deliberate.domain.Histogram as HistogramModel
+import civictech.dgs.types.Bucket as BucketOutput
+import civictech.dgs.types.Histogram as HistogramOutput
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(
@@ -57,14 +72,19 @@ class AppIntegrationTest {
     @Autowired
     private lateinit var tokenProvider: TokenProvider
 
-    private lateinit var token: String
+    private val user1: String = "user1"
+    private val user2: String = "user2"
 
     @BeforeAll
     fun setup() {
         runBlocking {
-            userService.registerUser("user", "password")
+            coroutineScope {
+                listOf(
+                    async(IO) { userService.registerUser(user1, "password") },
+                    async(IO) { userService.registerUser(user2, "password") }
+                ).awaitAll()
+            }
         }
-        token = tokenProvider.generate("user", listOf("USER"))
     }
 
     @Test
@@ -183,7 +203,7 @@ class AppIntegrationTest {
 
     @Test
     fun `agents can provide their attitude towards nodes`() {
-        modifyHeaders { it.setBearerAuth(token) }
+        modifyHeaders { it.setBearerAuth(tokenProvider.generate(user1)) }
 
         val markdownNodeRef: UUID = withMarkdownNode("I'm a highly controversial statement")
 
@@ -207,14 +227,53 @@ class AppIntegrationTest {
             .extractValueAsObject("setAttitudeHistogram", Attitude::class.java)
 
         result shouldNotBe null
-        result.agent.userName shouldBe "user"
+        result.agent.userName shouldBe "user1"
         result.contestableId shouldBe markdownNodeRef
 
         result.histogram?.toDomain() shouldBe histogram.toDomain()
     }
 
+    @Test
+    fun `providing attitudes eventually updates the direct average attitude`() {
+        val markdownNodeRef: UUID = withMarkdownNode("I'm a highly controversial statement")
+
+        val disbeliever = HistogramDef.DEFAULT.distribution(ZERO, Confidence.FULL)
+        val believer = HistogramDef.DEFAULT.distribution(ONE, Confidence.FULL)
+        setAttitudeHistogram(user1, markdownNodeRef, disbeliever)
+        setAttitudeHistogram(user2, markdownNodeRef, believer)
+
+        val markdownNode = getMarkdownNode(markdownNodeRef)
+
+        markdownNode.averageAttitude shouldNotBe null
+
+        val updatedAttitude = markdownNode.averageAttitude!!.toDomain()
+        val expectedAttitude = SimpleHistogram.arithmeticMean(disbeliever, believer)
+        updatedAttitude.approxEquals(expectedAttitude) shouldBe true
+    }
+
+    private fun setAttitudeHistogram(user: String, element: UUID, histogram: Histogram): Attitude {
+        modifyHeaders { it.setBearerAuth(tokenProvider.generate(user)) }
+        val createAttitude = buildMutation(Codec) {
+            setAttitudeHistogram(element, histogram.toInput()) {
+                agent {
+                    userName
+                }
+                contestableId
+                histogram {
+                    buckets {
+                        value
+                    }
+                }
+            }
+        }
+        return dgsGraphQLClient
+            .executeQuery(createAttitude)
+            .extractValueAsObject("setAttitudeHistogram", Attitude::class.java)
+    }
+
     private fun modifyHeaders(consumer: Consumer<HttpHeaders>) {
         val argumentCaptor = ArgumentCaptor.forClass(HttpHeaders::class.java)
+        reset(httpHeadersConsumer)
         `when`(httpHeadersConsumer.accept(argumentCaptor.capture())).then {
             consumer.accept(argumentCaptor.value)
         }
@@ -249,13 +308,24 @@ class AppIntegrationTest {
                 owner {
                     userName
                 }
+                averageAttitude {
+                    buckets {
+                        value
+                    }
+                }
             }
         })
         .extractValueAsObject("markdownNode", MarkdownNode::class.java)
 
-    private fun Histogram.toDomain(): HistogramModel =
-        HistogramModel(buckets = this.buckets.mapIndexed { i, bi -> bi.toDomain(this.buckets.size, i) })
+    private fun HistogramOutput.toDomain(): Histogram =
+        SimpleHistogram.of(buckets = this.buckets.mapIndexed { i, bo -> bo.toDomain(this.buckets.size, i) })!!
 
-    private fun Bucket.toDomain(bucketCount: Int, i: Int): BucketModel =
-        BucketModel.of(bucketCount, i, value.toDegree())
+    private fun BucketOutput.toDomain(bucketCount: Int, i: Int): Bucket =
+        Bucket.of(bucketCount, i, value.toDegree())
+
+    private fun Histogram.toInput(): HistogramInput =
+        HistogramInput(buckets = buckets.map { it.toInput() })
+
+    private fun Bucket.toInput(): BucketInput =
+        BucketInput(value.value)
 }

@@ -51,6 +51,8 @@ enum SourceType {
     Attitude
     Link
     Element
+'    credibility (global / local)
+    Agent
 }
 
 enum ChangeType {

@@ -2,14 +2,18 @@ package civictech.deliberate.graphql.datafetchers
 
 import civictech.deliberate.domain.Bucket
 import civictech.deliberate.domain.Degree.Companion.toDegree
-import civictech.deliberate.service.AttitudeService
 import civictech.deliberate.domain.Histogram
+import civictech.deliberate.domain.HistogramDef
+import civictech.deliberate.domain.SimpleHistogram
+import civictech.deliberate.service.AttitudeService
 import civictech.dgs.types.Agent
 import civictech.dgs.types.Attitude
-import civictech.dgs.types.BucketInput
+import civictech.dgs.types.Contestable
 import civictech.dgs.types.HistogramInput
 import com.netflix.graphql.dgs.DgsComponent
+import com.netflix.graphql.dgs.DgsData
 import com.netflix.graphql.dgs.DgsMutation
+import graphql.schema.DataFetchingEnvironment
 import kotlinx.coroutines.reactor.awaitSingle
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
@@ -31,11 +35,22 @@ class AttitudeDataFetcher(
         return attitudeService.setAttitudeHistogram(principal.name, on, histogram.toDomain()).toApi()
     }
 
+    @DgsData(parentType = "Contestable")
+    @PreAuthorize("isAuthenticated()")
+    suspend fun averageAttitude(dfe: DataFetchingEnvironment): HistogramOutput? {
+        return dfe.getSource<Contestable>()
+            ?.id
+            ?.let { attitudeService.getAverageAttitude(it) }
+            ?.toApi()
+    }
+
     companion object {
-        fun HistogramInput.toDomain(): Histogram = Histogram(this.buckets.mapIndexed{ i: Int, bi: BucketInput ->
-            bi.toDomain(this.buckets.size, i)
-        })
-        fun BucketInput.toDomain(count: Int, i: Int): Bucket = Bucket.of(count, i, this.value.toDegree())
+        fun HistogramInput.toDomain(): SimpleHistogram = SimpleHistogram.of(
+            HistogramDef.of(this.buckets.size),
+            this.buckets.map { it.value.toDegree() }
+        )
+
+        fun Histogram.toApi(): HistogramOutput = HistogramOutput({ this.buckets.map { it.toApi() } })
 
         fun civictech.deliberate.domain.Attitude.toApi(): Attitude = Attitude(
             { Agent { this.agentName } },
@@ -43,7 +58,7 @@ class AttitudeDataFetcher(
             { this.attitude.toApi() }
         )
 
-        fun Histogram.toApi() = HistogramOutput({
+        fun SimpleHistogram.toApi() = HistogramOutput({
             this.buckets.map { it.toApi() }
         })
 
