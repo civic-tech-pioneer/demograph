@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    id("com.netflix.dgs.codegen") version "8.0.1"
+    id("com.netflix.dgs.codegen") version "8.0.2"
     id("io.spring.dependency-management") version "1.1.7"
     id("org.springframework.boot") version "3.4.4"
     kotlin("jvm") version "2.1.20"
