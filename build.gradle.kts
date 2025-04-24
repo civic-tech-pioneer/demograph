@@ -99,7 +99,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 
     testImplementation("org.testcontainers:mongodb:1.20.6")
-    testImplementation("org.testcontainers:postgresql:1.20.6")
+    testImplementation("org.testcontainers:postgresql:1.21.0")
     testImplementation("org.testcontainers:r2dbc:1.21.0")
     testImplementation("org.testcontainers:junit-jupiter")
 }
