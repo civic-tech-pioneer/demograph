@@ -102,6 +102,6 @@ dependencies {
 
     testImplementation("org.testcontainers:mongodb:1.21.0")
     testImplementation("org.testcontainers:postgresql:1.21.0")
-    testImplementation("org.testcontainers:r2dbc:1.21.0")
+    testImplementation("org.testcontainers:r2dbc:1.21.1")
     testImplementation("org.testcontainers:junit-jupiter")
 }
